@@ -1,0 +1,16 @@
+﻿<div ng-controller="testController">
+    (
+    <div class="inline" ng-repeat="exp2 in exp1.getChildren()">
+        <div class="inline" ng-if="exp2.isGroup() == false">
+            {{exp2.getGroupLink()}}{{exp2.getField()}}={{exp2.getValue()}}
+            <md-button class="md-fab md-mini md-primary" ng-click="exp2.removeSelf()">del</md-button>
+            <md-button class="md-fab md-mini md-primary" ng-click="edit(exp2)">edit</md-button>
+        </div>
+        <div class="inline" ng-if="exp2.isGroup() == true">
+
+        </div>
+    </div>
+    <md-button ng-click="addInGroup()" class="md-fab md-mini md-primary">+</md-button>
+    )
+    <md-button ng-click="addGroup()" class="md-fab md-mini md-primary">+</md-button>
+</div>
