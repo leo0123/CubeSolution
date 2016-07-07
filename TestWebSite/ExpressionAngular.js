@@ -1,57 +1,84 @@
 ﻿var app = angular.module('myApp', ['ngMaterial']);
-app.service('expM', ExpressionManager);
-app.controller('myCtrl', function ($scope, expM) {
-    var tt = '{ "IsGroup": true, "Field": null, "Value": null, "GroupLink": " or ", "Children": [ { "IsGroup": false, "Field": "a", "Value": "a", "GroupLink": "", "Children": null }, { "IsGroup": false, "Field": "b", "Value": "b", "GroupLink": "", "Children": null } ] }';
-    var t = angular.fromJson(tt);
-    //expM.setRoot(t);
-    $scope.root = expM.getRoot();
-    $scope.test = function () {
-        if (expM.getRoot() instanceof Expression) {
-            $scope.return = "yes";
-        } else {
-            $scope.return = "no";
+//app.service('expM', ExpressionManager);
+app.run(function ($rootScope) {
+    var expM = new ExpressionManager();
+    var scope = $rootScope;
+    scope.dialogStatus = 'status';
+    scope.root = expM.getRoot();
+    scope.field = 'f';
+    scope.value = 'v';
+    scope.currentExp = null;
+    scope.currentGroup = null;
+    scope.mdPanelRef = null;
+    scope.save = function () {
+        if (scope.dialogStatus == "addInGroup") {
+            expM.add(scope.currentGroup, scope.field, scope.value);
         }
-        //$scope.return = expM.getRoot().ToString();
-        
-        //$scope.root = expM.getRoot();
-        //expM.getRoot().test();
+        else if (scope.dialogStatus == "edit") {
+            scope.currentExp.setFieldValue(scope.field, scope.value);
+        }
+        else if (scope.dialogStatus == "addGroup") {
+            expM.addGroup(scope.currentGroup, scope.field, scope.value);
+            scope.root = expM.getRoot();
+        }
+        scope.mdPanelRef.close();
+    };
+});
+app.controller('myCtrl', myCtrl);
+app.controller('PanelDialogCtrl', PanelDialogCtrl);
 
+function myCtrl($scope, $mdPanel) {
+    $scope.openMenu = function ($mdOpenMenu, $event) {
+        //originatorEv = ev;
+        $mdOpenMenu($event);
     };
-    $scope.save = function () {
-        if ($scope.dialogStatus == "addInGroup") {
-            expM.add($scope.currentGroup, $scope.field, $scope.value);
-        }
-        else if ($scope.dialogStatus == "edit") {
-            $scope.currentExp.setFieldValue($scope.field, $scope.value);
-        }
-        else if ($scope.dialogStatus == "addGroup") {
-            expM.addGroup($scope.currentGroup, $scope.field, $scope.value);
-            $scope.root = expM.getRoot();
-        }
-        $scope.return = expM.getRoot().Children.length;
-        //$scope.children = expM.getRoot().getChildren();
-        $scope.showDialog = false;
+    $scope.showDialog = function ($mdPanel) {
+        var position = $mdPanel.newPanelPosition()
+            .absolute()
+            .center();
+        var config = {
+            attachTo: angular.element(document.body),
+            controller: PanelDialogCtrl,
+            //controllerAs: 'myCtrl',
+            //disableParentScroll: this.disableParentScroll,
+            templateUrl: 'panel.tmpl.html',
+            hasBackdrop: true,
+            panelClass: 'demo-dialog-example',
+            position: position,
+            trapFocus: true,
+            zIndex: 150,
+            clickOutsideToClose: true,
+            escapeToClose: true,
+            focusOnOpen: true
+        };
+        $mdPanel.open(config);
     };
+
     $scope.edit = function (exp) {
-        $scope.showDialog = true;
-        $scope.currentExp = exp;
-        $scope.field = exp.Field;
-        $scope.value = exp.Value;
-        $scope.dialogStatus = "edit";
-    }
+        var scope = $scope.$root;
+        scope.currentExp = exp;
+        scope.field = exp.Field;
+        scope.value = exp.Value;
+        scope.dialogStatus = "edit";
+        $scope.showDialog($mdPanel);
+    };
     $scope.addInGroup = function (group) {
-        $scope.currentGroup = group;
-        $scope.showDialog = true;
-        
-        $scope.dialogStatus = "addInGroup";
+        var scope = $scope.$root;
+        scope.currentGroup = group;
+        scope.dialogStatus = "addInGroup";
+        $scope.showDialog($mdPanel);
     };
     $scope.addGroup = function (group) {
-        $scope.currentGroup = group;
-        $scope.showDialog = true;
+        var scope = $scope.$root;
+        scope.currentGroup = group;
+        scope.dialogStatus = "addGroup";
+        $scope.showDialog($mdPanel);
+    };
+    $scope.changeGroupLogic = function (exp) {
+        exp.changeGroupLogic();
+    };
+};
 
-        $scope.dialogStatus = "addGroup";
-    }
-    $scope.changeGroupLink = function (exp) {
-        exp.changeGroupLink();
-    }
-});
+function PanelDialogCtrl(mdPanelRef, $scope) {
+    $scope.$root.mdPanelRef = mdPanelRef;
+};

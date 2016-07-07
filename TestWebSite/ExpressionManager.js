@@ -2,8 +2,8 @@
 
     var expR = new Expression();
     expR.setGroup();
-    this.setRoot = function (e) {
-        expR = e;
+    this.setRoot = function (jsonObject) {
+        expR.CopyFrom(jsonObject, null);
     };
     this.getRoot = function () {
         return expR;

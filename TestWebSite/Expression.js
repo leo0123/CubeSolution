@@ -1,6 +1,12 @@
 ﻿function Expression() {
     this.IsGroup = true;
     var Parent = null;
+    this.getParent = function () {
+        return Parent;
+    };
+    this.setParent = function (e) {
+        Parent = e;
+    };
 
     //FIELD VALUE
     this.Field = "";
@@ -8,21 +14,21 @@
     //FIELD VALUE
 
     //GROUP
-    this.GroupLink = " or ";
+    this.GroupLogic = " or ";
     this.Children = [];
     //GROUP
 };
 
-Expression.prototype.getParent = function () {
-    return Parent;
-};
-Expression.prototype.setParent = function (e) {
-    Parent = e;
-};
+//Expression.prototype.getParent = function () {
+//    return Parent;
+//};
+//Expression.prototype.setParent = function (e) {
+//    Parent = e;
+//};
 
 //GROUP
 Expression.prototype.setGroup = function () {
-    this.GroupLink = " or ";
+    this.GroupLogic = " or ";
     this.IsGroup = true;
     this.Field = null;
     this.Value = null;
@@ -36,19 +42,19 @@ Expression.prototype.insertChild = function (leftExp, rightExp) {
     this.Children.splice(i + 1, 0, rightExp);
     rightExp.setParent(this);
 };
-Expression.prototype.changeGroupLink = function () {
-    if (this.getParent().GroupLink == " and ") {
-        this.getParent().GroupLink = " or ";
+Expression.prototype.changeGroupLogic = function () {
+    if (this.getParent().GroupLogic == " and ") {
+        this.getParent().GroupLogic = " or ";
     } else {
-        this.getParent().GroupLink = " and ";
+        this.getParent().GroupLogic = " and ";
     }
 };
-Expression.prototype.getGroupLink = function () {
+Expression.prototype.getGroupLogic = function () {
     if (this.getParent().Children.indexOf(this) == 0) {
         return "";
     }
     else {
-        return this.getParent().GroupLink;
+        return this.getParent().GroupLogic;
     }
 };
 Expression.prototype.getChildren = function () {
@@ -65,7 +71,7 @@ Expression.prototype.setFieldValue = function (field, value) {
     this.Field = field;
     this.Value = value;
     this.IsGroup = false;
-    this.GroupLink = "";
+    this.GroupLogic = "";
     this.Children = null;
 };
 Expression.prototype.removeSelf = function () {
@@ -85,14 +91,26 @@ Expression.prototype.ToString = function () {
                 value = child.ToString();
             }
             else {
-                value += this.GroupLink + child.ToString();
+                value += this.GroupLogic + child.ToString();
             }
         }
         return "(" + value + ")";
     }
 };
 
-Expression.prototype.CopyFrom = function (e) {
+Expression.prototype.CopyFrom = function (e, parent) {
     this.IsGroup = e.IsGroup;
-    
+    this.Field = e.Field;
+    this.Value = e.Value;
+    this.GroupLogic = e.GroupLogic;
+    this.setParent(parent);
+    if (e.IsGroup) {
+        for (var i = 0; i < e.Children.length; i++) {
+            var e1 = e.Children[i];
+            var ex = new Expression();
+            ex.CopyFrom(e1, this);
+            this.Children.push(ex);
+        }
+    }
+    return this;
 };
