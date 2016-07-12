@@ -40,7 +40,10 @@
     <form id="form1" runat="server">
 <div ng-app="myApp">
 <div ng-controller="myCtrl">
-
+    <h1>{{testhttp}}</h1>
+    <md-button ng-click="test()">test</md-button>
+    <md-button ng-click="load()">load</md-button>
+    <md-button ng-click="save()">save</md-button>
     <div>{{root | json}}</div>
     <br />
     <div>{{root.ToString()}}</div>

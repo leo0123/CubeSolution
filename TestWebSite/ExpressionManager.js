@@ -3,6 +3,8 @@
     var expR = new Expression();
     expR.setGroup();
     this.setRoot = function (jsonObject) {
+        expR = new Expression();
+        expR.setGroup();
         expR.CopyFrom(jsonObject, null);
     };
     this.getRoot = function () {
