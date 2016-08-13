@@ -1,5 +1,6 @@
 ﻿function ExpressionManager() {
-
+    //var expT = new CustomizeExpression();
+    //var testaa = expT.getChildGroup('BG');
     var expR = new Expression();
     expR.setGroup();
     this.setRoot = function (jsonObject) {

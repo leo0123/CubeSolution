@@ -4,9 +4,10 @@
 //    $locationProvider.html5Mode(true);
 //}]);
 app.run(function ($rootScope, $location) {
-    var expM = new ExpressionManager();
+    //var expM = new ExpressionManager();
+    var expM = new CustomizeExpressionManager();
     var scope = $rootScope;
-    //scope.expManager = expM;
+    scope.expManager = expM;
     scope.dialogStatus = 'status';
     scope.root = expM.getRoot();
     scope.field = 'f';
@@ -35,25 +36,265 @@ app.run(function ($rootScope, $location) {
         var url = $location.$$absUrl;
         var regStr = /\bid\b\=\d*/i;
         var paras = url.match(regStr);
-        var idStr = paras[0];
-        var subRegStr = /\d*$/;
-        var ids = idStr.match(subRegStr);
-        scope.id = ids[0];
+        if (paras != null && paras.length > 0) {
+            var idStr = paras[0];
+            var subRegStr = /\d*$/;
+            var ids = idStr.match(subRegStr);
+            scope.id = ids[0];
+        }
     })();
 });
 app.controller('myCtrl', myCtrl);
 app.controller('PanelDialogCtrl', PanelDialogCtrl);
 
 function myCtrl($scope, $mdPanel, $http, $location) {
-    //$scope.test = function () {
-    //    var url = $location.$$absUrl;
-    //    var regStr = /\bid\b\=\d*/;
-    //    var paras = url.match(regStr);
-    //    var idStr = paras[0];
-    //    var subRegStr = /\d*$/;
-    //    var ids = idStr.match(subRegStr);
-    //    $scope.testhttp = ids[0];
-    //}
+    var scope = $scope.$root;
+    var expM = scope.expManager;
+    var serviceUrl = "http://localhost:64951/SAPBW3DataService.svc/";
+    //$element.find('input').on('keydown', function (ev) {
+    //    ev.stopPropagation();
+    //});
+    $scope.onSearchChange = function (event) {
+        event.stopPropagation();
+    };
+    $scope.inputProfitCenterChanged = function () {
+        if ($scope.inputProfitCenter.length == 2) {
+            var filter = "indexof(ProfitCenterCode, '" + $scope.inputProfitCenter + "') ge 0";
+            if ($scope.selectedBG != null && $scope.selectedBG.length > 0) {
+                filter += " and (BGCode eq ''";
+                for (var i = 0; i < $scope.selectedBG.length; i++) {
+                    filter += " or BGCode eq '" + $scope.selectedBG[0] + "'";
+                }
+                filter += ")";
+            }
+            searchProfitCenter(filter);
+        }
+        else if ($scope.inputProfitCenter.length < 2) {
+            $scope.ProfitCenters = [];
+            //$scope.searchProfitCenterResult = 'key word is too short';
+        };
+    };
+    searchProfitCenter = function (filter) {
+        var urlStr = serviceUrl + "DimProfitCenters?$filter=" + filter;
+        //urlStr = serviceUrl + "DimProfitCenters?$filter=BGCode eq 'FMBG' or BGCode eq 'IABG'";
+        $http({
+            method: "GET",
+            url: urlStr,
+            headers: {
+                'Content-Type': 'application/json; charset=utf-8'
+            }
+        }).then(function mySucces(response) {
+            $scope.ProfitCenters = response.data.d;
+            //$scope.searchProfitCenterResult = 'click to select ProfitCenter';
+
+        }, function myError(response) {
+            $scope.testhttp = response.status;
+        })
+    };
+    testload = function () {
+        var JSONStr = '{ "IsGroup": true, "Field": "root", "Value": null, "GroupLogic": " and ", "Children": [ { "IsGroup": true, "Field": "BGCode", "Value": null, "GroupLogic": " or ", "Children": [ { "IsGroup": false, "Field": "BGCode", "Value": "MSBU", "GroupLogic": "", "Children": null }, { "IsGroup": false, "Field": "BGCode", "Value": "CLBG", "GroupLogic": "", "Children": null } ] }, { "IsGroup": true, "Field": "ProfitCenterCode", "Value": null, "GroupLogic": " or ", "Children": [ { "IsGroup": false, "Field": "ProfitCenterCode", "Value": "CNCR1", "GroupLogic": "", "Children": null }, { "IsGroup": false, "Field": "ProfitCenterCode", "Value": "APT04CD", "GroupLogic": "", "Children": null } ] }, { "IsGroup": true, "Field": "SalesP", "Value": null, "GroupLogic": " or ", "Children": [ { "IsGroup": false, "Field": "SalesP", "Value": "JLITT", "GroupLogic": "", "Children": null }, { "IsGroup": false, "Field": "SalesP", "Value": "KHSU", "GroupLogic": "", "Children": null } ] }, { "IsGroup": true, "Field": "Office", "Value": null, "GroupLogic": " or ", "Children": [ { "IsGroup": false, "Field": "Office", "Value": "DGA", "GroupLogic": "", "Children": null }, { "IsGroup": false, "Field": "Office", "Value": "VVK", "GroupLogic": "", "Children": null } ] }, { "IsGroup": true, "Field": "SalesOffice", "Value": null, "GroupLogic": " or ", "Children": [ { "IsGroup": false, "Field": "SalesOffice", "Value": "DGA", "GroupLogic": "", "Children": null }, { "IsGroup": false, "Field": "SalesOffice", "Value": "DGB", "GroupLogic": "", "Children": null } ] }, { "IsGroup": true, "Field": "SalesTypeName", "Value": null, "GroupLogic": " or ", "Children": [ { "IsGroup": false, "Field": "SalesTypeName", "Value": "Design In", "GroupLogic": "", "Children": null }, { "IsGroup": false, "Field": "SalesTypeName", "Value": "Trading", "GroupLogic": "", "Children": null } ] }, { "IsGroup": true, "Field": "EndCustomerName", "Value": null, "GroupLogic": " or ", "Children": [ { "IsGroup": false, "Field": "EndCustomerName", "Value": "APPLE", "GroupLogic": "", "Children": null }, { "IsGroup": false, "Field": "EndCustomerName", "Value": "AMAZON", "GroupLogic": "", "Children": null } ] }, { "IsGroup": true, "Field": "SoldToCustomerName", "Value": null, "GroupLogic": " or ", "Children": [ { "IsGroup": false, "Field": "SoldToCustomerName", "Value": "DELL", "GroupLogic": "", "Children": null }, { "IsGroup": false, "Field": "SoldToCustomerName", "Value": "COSTCO EAST PLANO", "GroupLogic": "", "Children": null } ] } ] }';
+        var jsonObject = angular.fromJson(JSONStr);
+        $scope.$root.setRoot(jsonObject);
+        $scope.selectedBG = [];
+        $scope.selectedProfitCenter = [];
+        $scope.selectedSalesP = [];
+        $scope.selectedEndCustomer = [];
+        $scope.selectedSoldToCustomer = [];
+        $scope.selectedOffice = [];
+        $scope.selectedSalesOffice = [];
+        $scope.selectedSalesType = [];
+        var lists = {
+            selectedBG: $scope.selectedBG
+            , selectedProfitCenter: $scope.selectedProfitCenter
+            , selectedSalesP: $scope.selectedSalesP
+            , selectedEndCustomer: $scope.selectedEndCustomer
+            , selectedSoldToCustomer: $scope.selectedSoldToCustomer
+            , selectedOffice: $scope.selectedOffice
+            , selectedSalesOffice: $scope.selectedSalesOffice
+            , selectedSalesType: $scope.selectedSalesType
+        };
+        expM.tryParse(lists);
+        if (lists.selectedProfitCenter.length > 0) {
+            var filter = "ProfitCenterCode eq ''";
+            for (var i = 0; i < lists.selectedProfitCenter.length; i++) {
+                filter += " or ProfitCenterCode eq '" + lists.selectedProfitCenter[i] + "'";
+            }
+            searchProfitCenter(filter);
+        }
+        if (lists.selectedEndCustomer.length > 0) {
+            var filter = "CustomerEntityName eq '1'";
+            for (var i = 0; i < lists.selectedEndCustomer.length; i++) {
+                filter += " or CustomerEntityName eq '" + lists.selectedEndCustomer[i] + "'";
+            }
+            searchEndCustomer(filter);
+        }
+        if (lists.selectedSoldToCustomer.length > 0) {
+            var filter = "CustomerName eq ''";
+            for (var i = 0; i < lists.selectedSoldToCustomer.length; i++) {
+                filter += " or CustomerName eq '" + lists.selectedSoldToCustomer[i] + "'";
+            }
+            searchSoldToCustomer(filter);
+        }
+    };
+    
+    $scope.inputEndCustomerChanged = function () {
+        if ($scope.inputEndCustomer.length == 2) {
+            var filter = "indexof(CustomerEntityName, '" + $scope.inputEndCustomer + "') ge 0";
+            searchEndCustomer(filter);
+        }
+        else if ($scope.inputEndCustomer.length < 2) {
+            $scope.EndCustomers = [];
+            //$scope.searchEndCustomerResult = 'key word is too short';
+        };
+    };
+    searchEndCustomer = function (filter) {
+        var urlStr = serviceUrl + "DimCustomerEntities?$filter=" + filter;
+        $http({
+            method: "GET",
+            url: urlStr,
+            headers: {
+                'Content-Type': 'application/json; charset=utf-8'
+            }
+        }).then(function mySucces(response) {
+            $scope.EndCustomers = response.data.d;
+            //$scope.searchEndCustomerResult = 'click to select Customer';
+
+        }, function myError(response) {
+            $scope.testhttp = response.status;
+        })
+    };
+    $scope.inputSoldToCustomerChanged = function () {
+        if ($scope.inputSoldToCustomer.length == 3) {
+            var filter = "indexof(CustomerName, '" + $scope.inputSoldToCustomer + "') ge 0";
+            searchSoldToCustomer(filter);
+        }
+        else if ($scope.inputSoldToCustomer.length < 3) {
+            $scope.SoldToCustomers = [];
+            //$scope.searchSoldToCustomerResult = 'key word is too short';
+        };
+    };
+    searchSoldToCustomer = function myfunction(filter) {
+        var urlStr = serviceUrl + "vDimCustomers?$filter=" + filter;
+        $http({
+            method: "GET",
+            url: urlStr,
+            headers: {
+                'Content-Type': 'application/json; charset=utf-8'
+            }
+        }).then(function mySucces(response) {
+            $scope.SoldToCustomers = response.data.d;
+            //$scope.searchSoldToCustomerResult = 'click to select Customer';
+
+        }, function myError(response) {
+            $scope.testhttp = response.status;
+        })
+    };
+    $scope.selectedChanged = function (field) {
+        var list = null;
+        if (field == 'BGCode') {
+            list = $scope.selectedBG;
+        }
+        else if (field == 'ProfitCenterCode') {
+            list = $scope.selectedProfitCenter;
+        }
+        else if (field == 'SalesP') {
+            list = $scope.selectedSalesP;
+        }
+        else if (field == 'EndCustomerName') {
+            list = $scope.selectedEndCustomer;
+        }
+        else if (field == 'SoldToCustomerName') {
+            list = $scope.selectedSoldToCustomer;
+        }
+        else if (field == 'Office') {
+            list = $scope.selectedOffice;
+        }
+        else if (field == 'SalesOffice') {
+            list = $scope.selectedSalesOffice;
+        }
+        else if (field == 'SalesTypeName') {
+            list = $scope.selectedSalesType;
+        }
+        expM.clearGroup(field);
+        for (var i = 0; i < list.length; i++) {
+            var value = list[i];
+            expM.addInGroup(field, value);
+        }
+    };
+    $scope.previousTab = function () {
+        if ($scope.selectedTabIndex > 0) {
+            $scope.selectedTabIndex = $scope.selectedTabIndex - 1;
+        }
+    };
+    $scope.nextTab = function () {
+        if ($scope.selectedTabIndex < 7) {
+            $scope.selectedTabIndex = $scope.selectedTabIndex + 1;
+        }
+    };
+    $scope.loadOption = function () {
+        $scope.waiting = true;
+        var urlStr = serviceUrl + "DimBGs";
+        $http({
+            method: "GET",
+            url: urlStr,
+            headers: {
+                'Content-Type': 'application/json; charset=utf-8'
+            }
+        }).then(function mySucces(response) {
+            $scope.BGs = response.data.d;
+        }, function myError(response) {
+            $scope.testhttp = response.status;
+        });
+        urlStr = serviceUrl + "DimSalesPs";
+        $http({
+            method: "GET",
+            url: urlStr,
+            headers: {
+                'Content-Type': 'application/json; charset=utf-8'
+            }
+        }).then(function mySucces(response) {
+            $scope.SalesPs = response.data.d;
+            $scope.waiting = false;
+        }, function myError(response) {
+            $scope.testhttp = response.status;
+        });
+        urlStr = serviceUrl + "vDimOffices";
+        $http({
+            method: "GET",
+            url: urlStr,
+            headers: {
+                'Content-Type': 'application/json; charset=utf-8'
+            }
+        }).then(function mySucces(response) {
+            $scope.Offices = response.data.d;
+        }, function myError(response) {
+            $scope.testhttp = response.status;
+        });
+        urlStr = serviceUrl + "vDimSalesOffices";
+        $http({
+            method: "GET",
+            url: urlStr,
+            headers: {
+                'Content-Type': 'application/json; charset=utf-8'
+            }
+        }).then(function mySucces(response) {
+            $scope.SalesOffices = response.data.d;
+        }, function myError(response) {
+            $scope.testhttp = response.status;
+        });
+        urlStr = serviceUrl + "DimSalesTypes";
+        $http({
+            method: "GET",
+            url: urlStr,
+            headers: {
+                'Content-Type': 'application/json; charset=utf-8'
+            }
+        }).then(function mySucces(response) {
+            $scope.SalesTypes = response.data.d;
+        }, function myError(response) {
+            $scope.testhttp = response.status;
+        });
+    };
 
     $scope.getFormDigestService = function ($http, actSave) {
         $http({
@@ -101,8 +342,12 @@ function myCtrl($scope, $mdPanel, $http, $location) {
     $scope.save = function () {
         $scope.getFormDigestService($http, $scope.actSave);
     };
-
+    
     $scope.load = function () {
+        //test
+        testload();
+        return;
+        //test
         var urlStr = "http://amdpfwfedev01/sites/MyDelta/_api/web/lists/getbytitle('CubePermissions')/items(" + $scope.$root.id + ")";
         $http({
             method: "GET",
