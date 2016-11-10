@@ -54,10 +54,10 @@ function myCtrl($scope, $mdPanel, $http, $location) {
     var scope = $scope.$root;
     var expM = scope.expManager;
     var serviceUrl = "http://amdpfweb02:8080/SAPBW3DataService.svc/";//"http://localhost:64951/SAPBW3DataService.svc/";
-    var digestUrl = "http://amdpfwfedev01/sites/test/_api/contextinfo";
-    var listUrl = "http://amdpfwfedev01/sites/test/_api/web/lists/getbytitle('Sales Person Profile')/items(" + $scope.$root.id + ")";
+    var digestUrl = "http://amdpfwfe02:9999/_api/contextinfo";
+    var listUrl = "http://amdpfwfe02:9999/_api/web/lists/getbytitle('Sales Person Profile')/items(" + $scope.$root.id + ")";
     //var listUrl = "http://amdpfwfedev01/sites/test/_api/web/lists/getbytitle('Sales Person Profile')/items?Title eq " + $scope.$root.id;
-    
+
     //$element.find('input').on('keydown', function (ev) {
     //    ev.stopPropagation();
     //});
@@ -143,7 +143,7 @@ function myCtrl($scope, $mdPanel, $http, $location) {
             searchSoldToCustomer(filter);
         }
     };
-    
+
     $scope.inputEndCustomerChanged = function () {
         if ($scope.inputEndCustomer.length == 2) {
             var filter = "indexof(CustomerEntityName, '" + $scope.inputEndCustomer + "') ge 0";
@@ -240,7 +240,7 @@ function myCtrl($scope, $mdPanel, $http, $location) {
     };
     $scope.loadOption = function () {
         $scope.waiting = true;
-        var urlStr = serviceUrl + "DimBGs";
+        var urlStr = serviceUrl + "DimBGs?$orderby=BGCode";
         $http({
             method: "GET",
             url: urlStr,
@@ -302,8 +302,8 @@ function myCtrl($scope, $mdPanel, $http, $location) {
             $scope.status = response.status;
         });
     };
-	$scope.loadOption();
-	
+    $scope.loadOption();
+
     $scope.getFormDigestService = function ($http, actSave) {
         $http({
             method: "POST",
@@ -342,17 +342,21 @@ function myCtrl($scope, $mdPanel, $http, $location) {
             //$scope.DomainAccount = response.data.d.Title;
             //var jsonObject = angular.fromJson(response.data.d.JSONStr);
             //$scope.$root.setRoot(jsonObject);
-			$scope.status = "saved"
+            $scope.status = "saved"
         }, function myError(response) {
             $scope.status = response.status;
         });
     };
 
     $scope.save = function () {
-		$scope.status = "saving";
-        $scope.getFormDigestService($http, $scope.actSave);
+        if ($scope.WorkflowStatus == "lock") {
+            $scope.status = "can not save, in approving";
+        } else {
+            $scope.status = "saving";
+            $scope.getFormDigestService($http, $scope.actSave);
+        }
     };
-    
+
     $scope.load = function () {
         //test
         //testload();
@@ -368,15 +372,18 @@ function myCtrl($scope, $mdPanel, $http, $location) {
             }
         }).then(function mySucces(response) {
             $scope.DomainAccount = response.data.d.Title;
-            var jsonObject = angular.fromJson(response.data.d.JSONStr);
-            $scope.$root.setRoot(jsonObject);
-            //$scope.DomainAccount = response.data.d.JSONStr;
+            $scope.WorkflowStatus = response.data.d.WorkflowStatus;
+            if (response.data.d.JSONStr != null) {
+                var jsonObject = angular.fromJson(response.data.d.JSONStr);
+                $scope.$root.setRoot(jsonObject);
+                //$scope.DomainAccount = response.data.d.JSONStr;
+            }
         }, function myError(response) {
             $scope.status = response.status;
         });
     };
-	$scope.load();
-	
+    $scope.load();
+
     $scope.openMenu = function ($mdOpenMenu, $event) {
         //originatorEv = ev;
         $mdOpenMenu($event);
