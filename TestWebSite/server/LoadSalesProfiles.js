@@ -37,7 +37,7 @@ function getFormDigestService(call) {
 
 function getProfile() {
     $.ajax({
-        url: listUrl,
+        url: listUrl + "?$top=200",
         method: "GET",
         headers: { "Accept": "application/json; odata=verbose" },
         success: function (data) {
@@ -55,31 +55,51 @@ function updateProfileP2(listItems) {
     total = listItems.length;
     m = 0;
     n = 0;
+    l = 0;
     for (var i = 0; i < total; i++) {
-        var oneItem = listItems[i];
-        getAccount(oneItem.Employee_x0020_Code, oneItem.ID);
+        getAccount(listItems[i]);
     }
 };
 
 function getAccount(item) {
-    //TODO
     var url = dataUrl3 + "?$filter=Emp_Code eq '" + item.Employee_x0020_Code + "'";
     $.getJSON(url, function (data, status) {
-        var l = data.d.length;
-        if (l > 0) {
-            var metadata = {
-                __metadata: { type: metaDataType }
-                , Email: ""
-
-            };
-            for (var i = 0; i < l; i++) {
-                var oneAccount = data.d[i];
-                if (oneAccount.AccountType == "Email" && oneAccount.Account.endswith("@deltaww.com")) {
-
+        var len = data.d.length;
+        if (len > 0) {
+            var OldEmail = "";
+            var OldSAPID = "";
+            var OtherAccount = "";
+            var NTAccount = item.Title.substring(13).toLowerCase();
+            var SalesP = item.SalesP.toLowerCase();
+            var Email = null;
+            if (item.Email != null) {
+                Email = item.Email.toLowerCase();
+            }
+            var Name = item.Name.toLowerCase();
+            for (var i = 0; i < len; i++) {
+                var oneAccount = data.d[i].Account.toLowerCase();
+                if (oneAccount.includes("@")) {
+                    if (oneAccount != Email) {
+                        OldEmail += oneAccount + ";";
+                    }
+                } else if (!isNaN(parseInt(oneAccount))) {
+                    if (oneAccount != item.Employee_x0020_ID) {
+                        OldSAPID += oneAccount + ";";
+                    }
+                } else {
+                    if (oneAccount != Name && oneAccount != SalesP && oneAccount != NTAccount) {
+                        OtherAccount += oneAccount + ";";
+                    }
                 }
             }
+            var metadata = {
+                __metadata: { type: metaDataType }
+                , Old_x0020_Email: OldEmail
+                , Old_x0020_SAP_x0020_ID: OldSAPID
+                , Other_x0020_Account: OtherAccount
+            };
             update(item.ID, metadata);
-        }
+        } else { l++; }
     });
 };
 
@@ -88,6 +108,7 @@ function updateProfile(listItems) {
     total = listItems.length;
     m = 0;
     n = 0;
+    l = 0;
     for (var i = 0; i < total; i++) {
         var oneItem = listItems[i];
         getEmpCode(oneItem.Title, oneItem.ID);
@@ -98,16 +119,22 @@ function getEmpCode(ntaccount, id) {
     var account = ntaccount.substring(13);
     var url = dataUrl2 + "?$filter=ntaccount eq '" + account + "'";
     $.getJSON(url, function (data, status) {
-        if (data.d.length == 1) {
+        if (data.d.length >= 1) {
             var metadata = {
                 __metadata: { type: metaDataType }
 		        	, Name: data.d[0].Name
-		        	, SAP_x0020_Employee_x0020_ID: data.d[0].Race
+		        	, Employee_x0020_ID: data.d[0].Race
 		        	, Employee_x0020_Code: data.d[0].Emp_Code
 		        	, SalesP: data.d[0].SalesP
+		        	, Terminate_x0020_Date: data.d[0].Terminate_Date
+		        	, Status: data.d[0].Status
             };
             update(id, metadata);
+        } else {
+            l++;
+            alert("account:" + account + data.d.length);
         }
+
     });
 };
 
@@ -144,7 +171,7 @@ function getNTAccount() {
 
 function uploadNTAccount(AccountList) {
     alert(AccountList.length);
-    total = 5;
+    total = AccountList.length;
     for (var i = 0; i < total; i++) {//AccountList.length
         var oneSales = AccountList[i];
         create(oneSales.SALES_ACCOUNT);
@@ -154,8 +181,9 @@ function uploadNTAccount(AccountList) {
 var total = 0;
 var m = 0;
 var n = 0;
+var l = 0;
 function create(title) {
-    var metadata = { __metadata: { type: 'SP.Data.Sales_x0020_Person_x0020_ProfileListItem' }, Title: 'i:0#.w|delta\\' + title, Domain_x0020_Account: title };
+    var metadata = { __metadata: { type: 'SP.Data.Sales_x0020_Person_x0020_ProfileListItem' }, Title: 'i:0#.w|delta\\' + title, Name: title };
     $.ajax({
         url: listUrl,
         type: 'post',
@@ -179,7 +207,7 @@ function create(title) {
 };
 
 function isDone() {
-    if (total > 0 && m + n == total) {
-        alert("success: " + m + "; error: " + n);
+    if (total > 0 && m + n + l == total) {
+        alert("success: " + m + "; error: " + n + "; miss: " + l);
     }
 };
