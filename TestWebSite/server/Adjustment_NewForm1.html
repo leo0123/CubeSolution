@@ -144,6 +144,19 @@
                             <td width="190px" valign="top" class="ms-formlabel">
                                 <h3 class="ms-standardheader">
                                     <nobr>
+                                        Year<span class="ms-formvalidation"> *</span>
+                                    </nobr>
+                                </h3>
+                            </td>
+                            <td width="400px" valign="top" class="ms-formbody">
+                                <SharePoint:FormField runat="server" id="ff10{$Pos}" ControlMode="New" FieldName="Year" __designer:bind="{ddwrt:DataBind('i',concat('ff10',$Pos),'Value','ValueChanged','ID',ddwrt:EscapeDelims(string(@ID)),'@Year')}" />
+                                <SharePoint:FieldDescription runat="server" id="ff10description{$Pos}" FieldName="Year" ControlMode="New" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="190px" valign="top" class="ms-formlabel">
+                                <h3 class="ms-standardheader">
+                                    <nobr>
                                         BG<span class="ms-formvalidation"> *</span>
                                     </nobr>
                                 </h3>
@@ -205,9 +218,57 @@
                             </td>
                             <td width="400px" valign="top" class="ms-formbody">
                                 <div id="btSearch">search</div>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="190px" valign="top" class="ms-formlabel">
+                                <h3 class="ms-standardheader">
+                                    <nobr>New Sales Person</nobr>
+                                </h3>
+                            </td>
+                            <td width="400px" valign="top" class="ms-formbody">
+                                <SharePoint:FormField runat="server" id="ff7{$Pos}" ControlMode="New" FieldName="New_x0020_Sales_x0020_Person" __designer:bind="{ddwrt:DataBind('i',concat('ff7',$Pos),'Value','ValueChanged','ID',ddwrt:EscapeDelims(string(@ID)),'@New_x0020_Sales_x0020_Person')}" />
+                                <SharePoint:FieldDescription runat="server" id="ff7description{$Pos}" FieldName="New_x0020_Sales_x0020_Person" ControlMode="New" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="190px" valign="top" class="ms-formlabel">
+                                <h3 class="ms-standardheader">
+                                    <nobr>New End Customer</nobr>
+                                </h3>
+                            </td>
+                            <td width="400px" valign="top" class="ms-formbody">
+                                <SharePoint:FormField runat="server" id="ff8{$Pos}" ControlMode="New" FieldName="New_x0020_End_x0020_Customer" __designer:bind="{ddwrt:DataBind('i',concat('ff8',$Pos),'Value','ValueChanged','ID',ddwrt:EscapeDelims(string(@ID)),'@New_x0020_End_x0020_Customer')}" />
+                                <SharePoint:FieldDescription runat="server" id="ff8description{$Pos}" FieldName="New_x0020_End_x0020_Customer" ControlMode="New" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="190px" valign="top" class="ms-formlabel">
+                                <h3 class="ms-standardheader">
+                                    <nobr>New Material</nobr>
+                                </h3>
+                            </td>
+                            <td width="400px" valign="top" class="ms-formbody">
+                                <SharePoint:FormField runat="server" id="ff9{$Pos}" ControlMode="New" FieldName="New_x0020_Material" __designer:bind="{ddwrt:DataBind('i',concat('ff9',$Pos),'Value','ValueChanged','ID',ddwrt:EscapeDelims(string(@ID)),'@New_x0020_Material')}" />
+                                <SharePoint:FieldDescription runat="server" id="ff9description{$Pos}" FieldName="New_x0020_Material" ControlMode="New" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="190px" valign="top" class="ms-formlabel">
+                                <h3 class="ms-standardheader">
+                                    <nobr>Effective Year Month</nobr>
+                                </h3>
+                            </td>
+                            <td width="400px" valign="top" class="ms-formbody">
+                                <SharePoint:FormField runat="server" id="ff11{$Pos}" ControlMode="New" FieldName="Effective_x0020_Year_x0020_Month" __designer:bind="{ddwrt:DataBind('i',concat('ff11',$Pos),'Value','ValueChanged','ID',ddwrt:EscapeDelims(string(@ID)),'@Effective_x0020_Year_x0020_Month')}" />
+                                <SharePoint:FieldDescription runat="server" id="ff11description{$Pos}" FieldName="Effective_x0020_Year_x0020_Month" ControlMode="New" />
                                 <div id="searchDiv"></div>
                             </td>
                         </tr>
+
+
+
 
                         <tr id="idAttachmentsRow">
                             <td nowrap="true" valign="top" class="ms-formlabel" width="20%">
@@ -216,9 +277,9 @@
                             <td valign="top" class="ms-formbody" width="80%">
                                 <SharePoint:FormField runat="server" id="AttachmentsField" ControlMode="New" FieldName="Attachments" __designer:bind="{ddwrt:DataBind('i','AttachmentsField','Value','ValueChanged','ID',ddwrt:EscapeDelims(string(@ID)),'@Attachments')}" />
                                 <script>
-          var elm = document.getElementById(&quot;idAttachmentsTable&quot;);
-          if (elm == null || elm.rows.length == 0)
-          document.getElementById(&quot;idAttachmentsRow&quot;).style.display=&apos;none&apos;;
+                                    var elm = document.getElementById(&quot;idAttachmentsTable&quot;);
+                                    if (elm == null || elm.rows.length == 0)
+                                        document.getElementById(&quot;idAttachmentsRow&quot;).style.display=&apos;none&apos;;
                                 </script>
                             </td>
                         </tr>
@@ -262,11 +323,11 @@
     <script src="../../SitePages/scripts/jquery-3.1.0.min.js" type="text/javascript"></script>
 
     <script type="text/javascript">
-$(document).ready(function(){
-	$("#searchDiv").load("../../SitePages/Adjustment.html",function(){
-		$("#AngularDiv").hide();
-	});
-});
+        $(document).ready(function(){
+            $("#searchDiv").load("../../SitePages/Adjustment.html",function(){
+                $("#AngularDiv").hide();
+            });
+        });
     </script>
 
     <sharepoint:delegatecontrol runat="server" controlid="FormCustomRedirectControl" allowmultiplecontrols="true" />
@@ -283,10 +344,10 @@ $(document).ready(function(){
 </asp:content>
 <asp:content contentplaceholderid="PlaceHolderTitleAreaClass" runat="server">
     <script type="text/javascript" id="onetidPageTitleAreaFrameScript">
-	if (document.getElementById("onetidPageTitleAreaFrame") != null)
-	{
-		document.getElementById("onetidPageTitleAreaFrame").className="ms-areaseparator";
-	}
+        if (document.getElementById("onetidPageTitleAreaFrame") != null)
+        {
+            document.getElementById("onetidPageTitleAreaFrame").className="ms-areaseparator";
+        }
     </script>
 </asp:content>
 <asp:content contentplaceholderid="PlaceHolderBodyAreaClass" runat="server">
