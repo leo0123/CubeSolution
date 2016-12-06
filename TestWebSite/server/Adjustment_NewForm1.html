@@ -22,7 +22,7 @@
             <td>
                 <WebPartPages:WebPartZone runat="server" FrameType="None" ID="Main" Title="loc:Main">
                     <zonetemplate>
-                        <WebPartPages:DataFormWebPart runat="server" EnableOriginalValue="False" DisplayName="Adjustment Record" ViewFlag="1048584" ViewContentTypeId="" Default="FALSE" ListName="{3EBDD941-6CF8-4270-8B44-D6862CBCFF66}" ListId="3ebdd941-6cf8-4270-8b44-d6862cbcff66" PageType="PAGE_NEWFORM" PageSize="-1" UseSQLDataSourcePaging="True" DataSourceID="" ShowWithSampleData="False" AsyncRefresh="False" ManualRefresh="False" AutoRefresh="False" AutoRefreshInterval="60" NoDefaultStyle="TRUE" InitialAsyncDataFetch="False" Title="Adjustment Record" FrameType="None" SuppressWebPartChrome="False" Description="" IsIncluded="True" PartOrder="2" FrameState="Normal" AllowRemove="True" AllowZoneChange="True" AllowMinimize="True" AllowConnect="True" AllowEdit="True" AllowHide="True" IsVisible="True" DetailLink="" HelpLink="" HelpMode="Modeless" Dir="Default" PartImageSmall="" MissingAssembly="Cannot import this Web Part." PartImageLarge="" IsIncludedFilter="" ExportControlledProperties="True" ConnectionID="00000000-0000-0000-0000-000000000000" ID="g_12fc9ff8_7aaa_4d99_8886_34cb8bf1a356" ChromeType="None" ExportMode="All" __MarkupType="vsattributemarkup" __WebPartId="{12FC9FF8-7AAA-4D99-8886-34CB8BF1A356}" __AllowXSLTEditing="true" WebPart="true" Height="" Width="">
+                        <WebPartPages:DataFormWebPart runat="server" EnableOriginalValue="False" DisplayName="Adjustment Record" ViewFlag="1048584" ViewContentTypeId="" Default="FALSE" ListUrl="" ListDisplayName="" ListName="{3EBDD941-6CF8-4270-8B44-D6862CBCFF66}" ListId="3ebdd941-6cf8-4270-8b44-d6862cbcff66" PageType="PAGE_NEWFORM" PageSize="-1" UseSQLDataSourcePaging="True" DataSourceID="" ShowWithSampleData="False" AsyncRefresh="False" ManualRefresh="False" AutoRefresh="False" AutoRefreshInterval="60" NoDefaultStyle="TRUE" InitialAsyncDataFetch="False" Title="Adjustment Record" FrameType="None" SuppressWebPartChrome="False" Description="" IsIncluded="True" PartOrder="2" FrameState="Normal" AllowRemove="True" AllowZoneChange="True" AllowMinimize="True" AllowConnect="True" AllowEdit="True" AllowHide="True" IsVisible="True" DetailLink="" HelpLink="" HelpMode="Modeless" Dir="Default" PartImageSmall="" MissingAssembly="Cannot import this Web Part." PartImageLarge="" IsIncludedFilter="" ExportControlledProperties="True" ConnectionID="00000000-0000-0000-0000-000000000000" ID="g_12fc9ff8_7aaa_4d99_8886_34cb8bf1a356" ChromeType="None" ExportMode="All" __MarkupType="vsattributemarkup" __WebPartId="{12FC9FF8-7AAA-4D99-8886-34CB8BF1A356}" __AllowXSLTEditing="true" WebPart="true" Height="" Width="">
                             <datasources>
                                 <sharepoint:spdatasource runat="server" datasourcemode="ListItem" selectcommand="&lt;View&gt;&lt;Query&gt;&lt;Where&gt;&lt;Eq&gt;&lt;FieldRef Name=&quot;ContentType&quot;/&gt;&lt;Value Type=&quot;Text&quot;&gt;Item&lt;/Value&gt;&lt;/Eq&gt;&lt;/Where&gt;&lt;/Query&gt;&lt;/View&gt;" useinternalname="True" useserverdataformat="True">
                                     <selectparameters>
@@ -37,6 +37,7 @@
                                 </sharepoint:spdatasource>
                             </datasources>
                             <xsl>
+
 
 
                                 <xsl:stylesheet xmlns:x="http://www.w3.org/2001/XMLSchema" xmlns:dsp="http://schemas.microsoft.com/sharepoint/dsp" version="1.0" exclude-result-prefixes="xsl msxsl ddwrt" xmlns:ddwrt="http://schemas.microsoft.com/WebParts/v2/DataView/runtime" xmlns:asp="http://schemas.microsoft.com/ASPNET/20" xmlns:__designer="http://schemas.microsoft.com/WebParts/v2/DataView/designer" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:sharepoint="Microsoft.SharePoint.WebControls" xmlns:ddwrt2="urn:frontpage:internal">
@@ -127,24 +128,23 @@
             <tr>
                 <td>
                     <table border="0" cellspacing="0" width="100%">
-                        <tr>
+                        <!--<tr>
                             <td width="190px" valign="top" class="ms-formlabel">
-                                <h3 class="ms-standardheader">
-                                    <nobr>
-                                        Title<span class="ms-formvalidation"> *</span>
+                                <H3 class="ms-standardheader">
+                                    <nobr>Title<span class="ms-formvalidation"> *</span>
                                     </nobr>
-                                </h3>
+                                </H3>
                             </td>
                             <td width="400px" valign="top" class="ms-formbody">
-                                <SharePoint:FormField runat="server" id="ff1{$Pos}" ControlMode="New" FieldName="Title" __designer:bind="{ddwrt:DataBind('i',concat('ff1',$Pos),'Value','ValueChanged','ID',ddwrt:EscapeDelims(string(@ID)),'@Title')}" />
-                                <SharePoint:FieldDescription runat="server" id="ff1description{$Pos}" FieldName="Title" ControlMode="New" />
+                                <SharePoint:FormField runat="server" id="ff1{$Pos}" ControlMode="New" FieldName="Title" __designer:bind="{ddwrt:DataBind('i',concat('ff1',$Pos),'Value','ValueChanged','ID',ddwrt:EscapeDelims(string(@ID)),'@Title')}"/>
+                                <SharePoint:FieldDescription runat="server" id="ff1description{$Pos}" FieldName="Title" ControlMode="New"/>
                             </td>
-                        </tr>
-                        <tr>
+                        </tr>-->
+                        <tr title="oForm">
                             <td width="190px" valign="top" class="ms-formlabel">
                                 <h3 class="ms-standardheader">
                                     <nobr>
-                                        Year<span class="ms-formvalidation"> *</span>
+                                        Year<span class="ms-formvalidation"></span>
                                     </nobr>
                                 </h3>
                             </td>
@@ -154,6 +154,10 @@
                             </td>
                         </tr>
                         <tr>
+                            <td colspan="2"><div id="searchDiv"></div></td>
+                        </tr>
+
+                        <tr title="oForm">
                             <td width="190px" valign="top" class="ms-formlabel">
                                 <h3 class="ms-standardheader">
                                     <nobr>
@@ -166,7 +170,7 @@
                                 <SharePoint:FieldDescription runat="server" id="ff2description{$Pos}" FieldName="BG" ControlMode="New" />
                             </td>
                         </tr>
-                        <tr>
+                        <tr title="oForm">
                             <td width="190px" valign="top" class="ms-formlabel">
                                 <h3 class="ms-standardheader">
                                     <nobr>Sales Person</nobr>
@@ -177,7 +181,7 @@
                                 <SharePoint:FieldDescription runat="server" id="ff3description{$Pos}" FieldName="Sales_x0020_Person" ControlMode="New" />
                             </td>
                         </tr>
-                        <tr>
+                        <tr title="oForm">
                             <td width="190px" valign="top" class="ms-formlabel">
                                 <h3 class="ms-standardheader">
                                     <nobr>End Customer</nobr>
@@ -188,7 +192,7 @@
                                 <SharePoint:FieldDescription runat="server" id="ff4description{$Pos}" FieldName="End_x0020_Customer" ControlMode="New" />
                             </td>
                         </tr>
-                        <tr>
+                        <tr title="oForm">
                             <td width="190px" valign="top" class="ms-formlabel">
                                 <h3 class="ms-standardheader">
                                     <nobr>Material</nobr>
@@ -199,7 +203,7 @@
                                 <SharePoint:FieldDescription runat="server" id="ff5description{$Pos}" FieldName="Material" ControlMode="New" />
                             </td>
                         </tr>
-                        <tr>
+                        <tr title="oForm">
                             <td width="190px" valign="top" class="ms-formlabel">
                                 <h3 class="ms-standardheader">
                                     <nobr>Profit Center</nobr>
@@ -210,18 +214,18 @@
                                 <SharePoint:FieldDescription runat="server" id="ff6description{$Pos}" FieldName="Profit_x0020_Center" ControlMode="New" />
                             </td>
                         </tr>
-                        <tr>
+                        <!--<tr>
                             <td width="190px" valign="top" class="ms-formlabel">
-                                <h3 class="ms-standardheader">
+                                <H3 class="ms-standardheader">
                                     <nobr></nobr>
-                                </h3>
+                                </H3>
                             </td>
                             <td width="400px" valign="top" class="ms-formbody">
+                                Year: <input id="Year" value="2016"></input>
                                 <div id="btSearch">search</div>
-
                             </td>
-                        </tr>
-                        <tr>
+                        </tr>-->
+                        <tr title="oForm">
                             <td width="190px" valign="top" class="ms-formlabel">
                                 <h3 class="ms-standardheader">
                                     <nobr>New Sales Person</nobr>
@@ -232,7 +236,7 @@
                                 <SharePoint:FieldDescription runat="server" id="ff7description{$Pos}" FieldName="New_x0020_Sales_x0020_Person" ControlMode="New" />
                             </td>
                         </tr>
-                        <tr>
+                        <tr title="oForm">
                             <td width="190px" valign="top" class="ms-formlabel">
                                 <h3 class="ms-standardheader">
                                     <nobr>New End Customer</nobr>
@@ -243,7 +247,7 @@
                                 <SharePoint:FieldDescription runat="server" id="ff8description{$Pos}" FieldName="New_x0020_End_x0020_Customer" ControlMode="New" />
                             </td>
                         </tr>
-                        <tr>
+                        <tr title="oForm">
                             <td width="190px" valign="top" class="ms-formlabel">
                                 <h3 class="ms-standardheader">
                                     <nobr>New Material</nobr>
@@ -254,7 +258,7 @@
                                 <SharePoint:FieldDescription runat="server" id="ff9description{$Pos}" FieldName="New_x0020_Material" ControlMode="New" />
                             </td>
                         </tr>
-                        <tr>
+                        <tr title="oForm">
                             <td width="190px" valign="top" class="ms-formlabel">
                                 <h3 class="ms-standardheader">
                                     <nobr>Effective Year Month</nobr>
@@ -263,11 +267,8 @@
                             <td width="400px" valign="top" class="ms-formbody">
                                 <SharePoint:FormField runat="server" id="ff11{$Pos}" ControlMode="New" FieldName="Effective_x0020_Year_x0020_Month" __designer:bind="{ddwrt:DataBind('i',concat('ff11',$Pos),'Value','ValueChanged','ID',ddwrt:EscapeDelims(string(@ID)),'@Effective_x0020_Year_x0020_Month')}" />
                                 <SharePoint:FieldDescription runat="server" id="ff11description{$Pos}" FieldName="Effective_x0020_Year_x0020_Month" ControlMode="New" />
-                                <div id="searchDiv"></div>
                             </td>
                         </tr>
-
-
 
 
                         <tr id="idAttachmentsRow">
@@ -319,13 +320,17 @@
     </sharepoint:uiversionedcontent>
 </asp:content>
 <asp:content contentplaceholderid="PlaceHolderAdditionalPageHead" runat="server">
-
+    <link href="../../SitePages/scripts/bower_components/angular-material/angular-material.css" rel="stylesheet" />
     <script src="../../SitePages/scripts/jquery-3.1.0.min.js" type="text/javascript"></script>
 
     <script type="text/javascript">
         $(document).ready(function(){
-            $("#searchDiv").load("../../SitePages/Adjustment.html",function(){
-                $("#AngularDiv").hide();
+            $("[title='oForm']").hide();
+            $("[value='Save']").hide();
+            $("[value='Cancel']").hide();
+
+            $("#searchDiv").load("../../SitePages/AdjustmentAngularForm.html",function(){
+
             });
         });
     </script>
