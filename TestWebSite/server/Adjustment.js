@@ -7,55 +7,49 @@ app.controller("myCtrl", function ($scope, $http) {
     //var profileListUrl = listServer + "_api/web/lists/getbytitle('Sales Person Profile')/items";
     var profileListUrl = dataService + "vSalesPersonProfile";
     var dataUrl = dataService + "ActualBudget";
-    //var NTAccount = null;
-    var BG = "";
 
-    var SalesPerson = "";
-    var EndCustomer = "";
-    var Material = "";
-    var ProfitCenter = "";
+    var BG = $("[title='BG Required Field']");
 
-    var Year = "";
+    var SalesPerson = $("[title='Sales Person']");
+    var EndCustomer = $("[title='End Customer']");
+    var Material = $("[title='Material']");
+    var ProfitCenter = $("[title='Profit Center']");
 
-    var NewSalesPerson = "";
+    var Year = $("[title='Year']");
 
-    var YearMonth = "";
+    var NewSalesPerson = $("[title='New Sales Person']");
+    var NewEndCustomer = $("[title='New End Customer']");
+    var NewMaterial = $("[title='New Material']");
 
-    $("#test").hide();
-    $("#AngularDiv").hide();
+    var YearMonth = $("[title='Effective Year Month Required Field']");
+
+    var msg = $("#msg");
+
     $scope.selectedYear = "2016";
+    Year.val("2016");
     $scope.selectedMonth = "01";
+    YearMonth.val("201601");
 
     $scope.selectedChanged = function (field) {
         if (field == "SalesPerson") {
-            SalesPerson = $scope.selectedSalesPerson;
-            $("[title='Sales Person']").val(SalesPerson);
+            SalesPerson.val($scope.selectedSalesPerson);
         } else if (field == "EndCustomer") {
-            EndCustomer = $scope.selectedEndCustomer;
-            $("[title='End Customer']").val(EndCustomer);
+            EndCustomer.val($scope.selectedEndCustomer);
         } else if (field == "Material") {
-            Material = $scope.selectedMaterial;
-            $("[title='Material']").val(Material);
+            Material.val($scope.selectedMaterial);
         } else if (field == "ProfitCenter") {
-            ProfitCenter = $scope.selectedProfitCenter;
-            $("[title='Profit Center']").val(ProfitCenter);
+            ProfitCenter.val($scope.selectedProfitCenter);
         } else if (field == "NewSalesPerson") {
-            NewSalesPerson = $scope.selectedNewSalesPerson;
-            $("[title='New Sales Person']").val(NewSalesPerson);
+            NewSalesPerson.val($scope.selectedNewSalesPerson);
         } else if (field == "NewEndCustomer") {
-            NewEndCustomer = $scope.selectedNewEndCustomer;
-            $("[title='New End Customer']").val(NewEndCustomer);
+            NewEndCustomer.val($scope.selectedNewEndCustomer);
         } else if (field == "NewMaterial") {
-            NewMaterial = $scope.selectedNewMaterial;
-            $("[title='New Material']").val(NewMaterial);
+            NewMaterial.val($scope.selectedNewMaterial);
         } else if (field == "Year") {
-            Year = $scope.selectedYear;
-            $("[title='Year']").val(Year);
-            YearMonth = Year + $scope.selectedMonth;
-            $("[title='Effective Year Month Required Field']").val(YearMonth);
+            Year.val($scope.selectedYear);
+            YearMonth.val(Year.val() + $scope.selectedMonth);
         } else if (field == "YearMonth") {
-            YearMonth = Year + $scope.selectedMonth;
-            $("[title='Effective Year Month Required Field']").val(YearMonth);
+            YearMonth.val(Year.val() + $scope.selectedMonth);
         }
     };
 
@@ -74,14 +68,8 @@ app.controller("myCtrl", function ($scope, $http) {
     };
 
     $scope.inputChanged = function (value, type) {
-        if (type == "YearMonth") {
-            if ($scope.inputYearMonth != null) {
-                //$("[title='Effective Year Month Required Field']").val($scope.inputYearMonth);
-            }
-            return;
-        }
         if (type == "BG") {
-            setBG($scope.BG);
+            setBG(value);
             return;
         }
         if (value.length >= 1) {
@@ -109,7 +97,7 @@ app.controller("myCtrl", function ($scope, $http) {
         if (view.startsWith("New")) {
             view = view.substring(3, view.length);
         }
-        var urlStr = dataService + "v" + view + "ByBG?$filter=BG eq '" + BG + "'" + filter;
+        var urlStr = dataService + "v" + view + "ByBG?$filter=BG eq '" + BG.val() + "'" + filter;
         $http({
             method: "GET",
             url: urlStr,
@@ -119,7 +107,7 @@ app.controller("myCtrl", function ($scope, $http) {
         }).then(function mySucces(response) {
             setList(type, response.data.d);
         }, function myError(response) {
-            $scope.testhttp = response.status;
+            msg.text(response.status);
         })
     };
 
@@ -136,18 +124,16 @@ app.controller("myCtrl", function ($scope, $http) {
     }).then(function mySucces(response) {
         setBG(response.data.d.UserProfileProperties.results.find(getDept).Value);
     }, function myError(response) {
-        $scope.status = response.status;
+        msg.text(response.status);
     });
     function setBG(value) {
-        BG = value;
-        $("[title='BG Required Field']").val(BG);
-        $scope.BG = BG;
-        loadOption(BG);
+        BG.val(value);
+        $scope.BG = value;
+        loadOption(value);
     };
 
-    function loadOption(BG) {
-        var url = profileListUrl + "?$top=200&$orderby=DomainAccount&$filter=BG eq '" + BG + "'";
-        //$("[title='Sales Person']").val(url);
+    function loadOption(e) {
+        var url = profileListUrl + "?$top=999&$orderby=DomainAccount&$filter=BG eq '" + e + "'";
         $http({
             method: "GET",
             url: url,
@@ -155,37 +141,24 @@ app.controller("myCtrl", function ($scope, $http) {
                 "accept": "application/json;odata=verbose"
             }
         }).then(function mySucces(response) {
-            var list = response.data.d;
-            $scope.SalesPersons = list;
+            $scope.SalesPersons = response.data.d;
         }, function myError(response) {
-            $scope.status = response.status;
+            msg.text(response.status);
         });
     };
 
-    function getFormValue() {
-        BG = $("[title='BG Required Field']").val();
-
-        SalesPerson = $("[title='Sales Person']").val();
-        EndCustomer = $("[title='End Customer']").val();
-        Material = $("[title='Material']").val();
-        ProfitCenter = $("[title='Profit Center']").val();
-
-        Year = $("[title='Year']").val();
-    };
     function checkCondition() {
-        getFormValue();
-
-        if (SalesPerson == "" && EndCustomer == "" && Material == "") {
-            alert("Sales Person and End Customer and Material can't be empty at the same time");
+        if (SalesPerson.val() == "" && EndCustomer.val() == "" && Material.val() == "") {
+            msg.text("Sales Person and End Customer and Material can't be empty at the same time");
+            alert(msg.text());
             return false;
         }
         return true;
     };
     function checkValue() {
-        if ($("[title='New Sales Person']").val() == ""
-			&& $("[title='New End Customer']").val() == ""
-			&& $("[title='New Material']").val() == "") {
-            alert("New Sales Person and New End Customer and New Material can't be empty at the same time");
+        if (NewSalesPerson.val() == "" && NewEndCustomer.val() == "" && NewMaterial.val() == "") {
+            msg.text("New Sales Person and New End Customer and New Material can't be empty at the same time");
+            alert(msg.text());
             return false;
         }
         return true;
@@ -200,50 +173,40 @@ app.controller("myCtrl", function ($scope, $http) {
         }
         $("[value='Save']").click()
     });
+
     $("#btCancel").click(function () {
         $("[value='Cancel']").click()
     });
 
     $("#btSearch").click(function () {
-        //alert($scope.selectedMonth);
-        //alert($("[title='Effective Year Month Required Field']").val());
+        $scope.searchActualBudget();
+    });
+
+    $scope.searchActualBudget = function () {
+        msg.text("");
+        $scope.ActualBudget = null;
         if (checkCondition() == false) {
             return;
         }
 
-        $scope.searchActualBudget();
-        $("#AngularDiv").show();
-    });
-
-    $("#AngularClose").click(function () {
-        $("#AngularDiv").hide();
-    });
-
-    $scope.load1 = function () {
-        var condition = "";
-        if (SalesPerson != "") {
-            condition += " and SalesPerson eq '" + SalesPerson + "'";
-            //condition += "&SalesPerson='" + SalesPerson + "'";
-        }
-        if (EndCustomer != "") {
-            condition += " and EndCustomer eq '" + EndCustomer + "'";
-            //condition += "&EndCustomer='" + EndCustomer + "'";
-        }
-        if (Material != "") {
-            condition += " and Material eq '" + Material + "'";
-            //condition += "&Material='" + Material + "'";
-        }
-        if (ProfitCenter != "") {
-            condition += " and ProfitCenter eq '" + ProfitCenter + "'";
-            //condition += "&ProfitCenter='" + ProfitCenter + "'";
-        }
-        $scope.ActualBudget = null;
         $scope.status = "loading";
-        //$("#test").val(dataUrl + "?$filter=BG eq '" + BG + "' and Year eq '" + Year + "' " + condition);
+        var condition = "Year='" + Year.val() + "'&BG='" + BG.val() + "'";
+        if (SalesPerson.val() != "") {
+            condition += "&SalesPerson='" + SalesPerson.val() + "'";
+        }
+        if (EndCustomer.val() != "") {
+            condition += "&EndCustomer='" + EndCustomer.val() + "'";
+        }
+        if (Material.val() != "") {
+            condition += "&Material='" + Material.val() + "'";
+        }
+        if (ProfitCenter.val() != "") {
+            condition += "&ProfitCenter='" + ProfitCenter.val() + "'";
+        }
+        $scope.status = "loading:" + condition;
         $http({
             method: "GET",
-            url: dataUrl + "?$filter=BG eq '" + BG + "' and Year eq '" + Year + "' " + condition,
-            //url: dataUrl + "?Year='" + Year + "'&BG='" + BG + "'" + condition,
+            url: dataService + "getActualBudget?" + condition,
             headers: {
                 'Content-Type': 'application/json; charset=utf-8'
             }
@@ -252,41 +215,8 @@ app.controller("myCtrl", function ($scope, $http) {
             var myDate = new Date();
             $scope.status = "loaded at " + myDate.toLocaleTimeString();
         }, function myError(response) {
-            $scope.status = response.status;
-            alert("done");
+            $scope.status = "error:" + condition;
+            alert("error");
         });
     };
-    $scope.searchActualBudget = function () {
-        var condition = "";
-        if (SalesPerson != "") {
-            condition += "&SalesPerson='" + SalesPerson + "'";
-        }
-        if (EndCustomer != "") {
-            condition += "&EndCustomer='" + EndCustomer + "'";
-        }
-        if (Material != "") {
-            condition += "&Material='" + Material + "'";
-        }
-        if (ProfitCenter != "") {
-            condition += "&ProfitCenter='" + ProfitCenter + "'";
-        }
-        $scope.ActualBudget = null;
-        $scope.status = "loading";
-        $("#test").val(dataService + "getActualBudget?Year='" + Year + "'&BG='" + BG + "'" + condition);
-        $http({
-            method: "GET",
-            url: dataService + "getActualBudget?Year='" + Year + "'&BG='" + BG + "'" + condition,
-            headers: {
-                'Content-Type': 'application/json; charset=utf-8'
-            }
-        }).then(function mySucces(response) {
-            $scope.ActualBudget = response.data.d;
-            var myDate = new Date();
-            $scope.status = "loaded at " + myDate.toLocaleTimeString();
-        }, function myError(response) {
-            $scope.status = response.status;
-            alert("done");
-        });
-    };
-
 });

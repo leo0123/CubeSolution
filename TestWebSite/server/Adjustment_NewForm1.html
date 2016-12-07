@@ -154,7 +154,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td colspan="2"><div id="searchDiv"></div></td>
+                            <td colspan="2"><div id="AngularFormContainer"></div></td>
                         </tr>
 
                         <tr title="oForm">
@@ -214,17 +214,6 @@
                                 <SharePoint:FieldDescription runat="server" id="ff6description{$Pos}" FieldName="Profit_x0020_Center" ControlMode="New" />
                             </td>
                         </tr>
-                        <!--<tr>
-                            <td width="190px" valign="top" class="ms-formlabel">
-                                <H3 class="ms-standardheader">
-                                    <nobr></nobr>
-                                </H3>
-                            </td>
-                            <td width="400px" valign="top" class="ms-formbody">
-                                Year: <input id="Year" value="2016"></input>
-                                <div id="btSearch">search</div>
-                            </td>
-                        </tr>-->
                         <tr title="oForm">
                             <td width="190px" valign="top" class="ms-formlabel">
                                 <h3 class="ms-standardheader">
@@ -328,8 +317,10 @@
             $("[title='oForm']").hide();
             $("[value='Save']").hide();
             $("[value='Cancel']").hide();
+            $(".ms-toolbar").hide();//hide a blank area
+            $("[id='Ribbon.ListForm.Edit.Commit.Publish-Large']").hide();
 
-            $("#searchDiv").load("../../SitePages/AdjustmentAngularForm.html",function(){
+            $("#AngularFormContainer").load("../../SitePages/AdjustmentAngularForm.html",function(){
 
             });
         });
