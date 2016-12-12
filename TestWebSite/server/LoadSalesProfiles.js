@@ -1,7 +1,9 @@
-﻿var dataUrl = "http://amdpfweb02:8080/SAPBW3DataService.svc/vSalesAccount?$orderby=YEAR_MONTH%20desc";
-var dataUrl2 = "http://amdpfweb02:8080/SAPBW3DataService.svc/VSalesPersonAccount";
-var dataUrl3 = "http://amdpfweb02:8080/SAPBW3DataService.svc/VEmployee_Account";
-var listServer = "http://amdpfwfe02:9999/";
+﻿var dataService = "http://amdpfweb02:8080/SAPBW3DataService.svc/";
+var dataUrl = dataService + "vSalesAccount4LoadProfile?$orderby=YEAR_MONTH%20desc";
+var dataUrl2 = dataService + "VSalesPersonAccount4LoadProfile";
+var dataUrl3 = dataService + "VEmployee_Account4LoadProfile";
+var listServer = dataServer + "http://amdpfwfe02:9999/";
+var digestUrl = listServer + "_api/contextinfo";
 var listUrl = listServer + "_api/web/lists/getbytitle('Sales Person Profile')/items";
 var digest = null;
 var metaDataType = "SP.Data.Sales_x0020_Person_x0020_ProfileListItem";
@@ -19,7 +21,6 @@ function start(call) {
 };
 
 function getFormDigestService(call) {
-    var digestUrl = "http://amdpfwfe02:9999/_api/contextinfo";
     $.ajax({
         url: digestUrl,
         type: 'post',

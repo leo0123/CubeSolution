@@ -1,4 +1,4 @@
-﻿<%@ Page language="C#" MasterPageFile="~masterurl/default.master"    Inherits="Microsoft.SharePoint.WebPartPages.WebPartPage,Microsoft.SharePoint,Version=15.0.0.0,Culture=neutral,PublicKeyToken=71e9bce111e9429c" meta:progid="SharePoint.WebPartPage.Document" meta:webpartpageexpansion="full"  %>
+﻿<%@ Page language="C#" MasterPageFile="~masterurl/default.master"    Inherits="Microsoft.SharePoint.WebPartPages.WebPartPage,Microsoft.SharePoint,Version=15.0.0.0,Culture=neutral,PublicKeyToken=71e9bce111e9429c" meta:webpartpageexpansion="full" meta:progid="SharePoint.WebPartPage.Document"  %>
 <%@ Register Tagprefix="SharePoint" Namespace="Microsoft.SharePoint.WebControls" Assembly="Microsoft.SharePoint, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c" %> <%@ Register Tagprefix="Utilities" Namespace="Microsoft.SharePoint.Utilities" Assembly="Microsoft.SharePoint, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c" %> <%@ Import Namespace="Microsoft.SharePoint" %> <%@ Assembly Name="Microsoft.Web.CommandUI, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c" %> <%@ Register Tagprefix="WebPartPages" Namespace="Microsoft.SharePoint.WebPartPages" Assembly="Microsoft.SharePoint, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c" %>
 <asp:content contentplaceholderid="PlaceHolderPageTitle" runat="server">
     <sharepoint:listformpagetitle runat="server" />
@@ -22,7 +22,7 @@
             <td>
                 <WebPartPages:WebPartZone runat="server" FrameType="None" ID="Main" Title="loc:Main">
                     <zonetemplate>
-                        <WebPartPages:DataFormWebPart runat="server" EnableOriginalValue="False" DisplayName="Adjustment Record" ViewFlag="1048584" ViewContentTypeId="" Default="FALSE" ListName="{3EBDD941-6CF8-4270-8B44-D6862CBCFF66}" ListId="3ebdd941-6cf8-4270-8b44-d6862cbcff66" PageType="PAGE_NEWFORM" PageSize="-1" UseSQLDataSourcePaging="True" DataSourceID="" ShowWithSampleData="False" AsyncRefresh="False" ManualRefresh="False" AutoRefresh="False" AutoRefreshInterval="60" NoDefaultStyle="TRUE" InitialAsyncDataFetch="False" Title="Adjustment Record" FrameType="None" SuppressWebPartChrome="False" Description="" IsIncluded="True" PartOrder="2" FrameState="Normal" AllowRemove="True" AllowZoneChange="True" AllowMinimize="True" AllowConnect="True" AllowEdit="True" AllowHide="True" IsVisible="True" DetailLink="" HelpLink="" HelpMode="Modeless" Dir="Default" PartImageSmall="" MissingAssembly="Cannot import this Web Part." PartImageLarge="" IsIncludedFilter="" ExportControlledProperties="True" ConnectionID="00000000-0000-0000-0000-000000000000" ID="g_12fc9ff8_7aaa_4d99_8886_34cb8bf1a356" ChromeType="None" ExportMode="All" __MarkupType="vsattributemarkup" __WebPartId="{12FC9FF8-7AAA-4D99-8886-34CB8BF1A356}" __AllowXSLTEditing="true" WebPart="true" Height="" Width="">
+                        <WebPartPages:DataFormWebPart runat="server" EnableOriginalValue="False" DisplayName="Adjustment Record" ViewFlag="1048584" ViewContentTypeId="" Default="FALSE" ListUrl="" ListDisplayName="" ListName="{3EBDD941-6CF8-4270-8B44-D6862CBCFF66}" ListId="3ebdd941-6cf8-4270-8b44-d6862cbcff66" PageType="PAGE_EDITFORM" PageSize="-1" UseSQLDataSourcePaging="True" DataSourceID="" ShowWithSampleData="False" AsyncRefresh="False" ManualRefresh="False" AutoRefresh="False" AutoRefreshInterval="60" NoDefaultStyle="TRUE" InitialAsyncDataFetch="False" Title="Adjustment Record" FrameType="None" SuppressWebPartChrome="False" Description="" IsIncluded="True" PartOrder="2" FrameState="Normal" AllowRemove="True" AllowZoneChange="True" AllowMinimize="True" AllowConnect="True" AllowEdit="True" AllowHide="True" IsVisible="True" DetailLink="" HelpLink="" HelpMode="Modeless" Dir="Default" PartImageSmall="" MissingAssembly="Cannot import this Web Part." PartImageLarge="" IsIncludedFilter="" ExportControlledProperties="True" ConnectionID="00000000-0000-0000-0000-000000000000" ID="g_1e00aeb2_6eaa_466a_beb7_ae76b65e3a1b" ChromeType="None" ExportMode="All" __MarkupType="vsattributemarkup" __WebPartId="{1E00AEB2-6EAA-466A-BEB7-AE76B65E3A1B}" __AllowXSLTEditing="true" WebPart="true" Height="" Width="">
                             <datasources>
                                 <sharepoint:spdatasource runat="server" datasourcemode="ListItem" selectcommand="&lt;View&gt;&lt;Query&gt;&lt;Where&gt;&lt;Eq&gt;&lt;FieldRef Name=&quot;ContentType&quot;/&gt;&lt;Value Type=&quot;Text&quot;&gt;Item&lt;/Value&gt;&lt;/Eq&gt;&lt;/Where&gt;&lt;/Query&gt;&lt;/View&gt;" useinternalname="True" useserverdataformat="True">
                                     <selectparameters>
@@ -38,13 +38,10 @@
                             </datasources>
                             <xsl>
 
-
-
-
                                 <xsl:stylesheet xmlns:x="http://www.w3.org/2001/XMLSchema" xmlns:dsp="http://schemas.microsoft.com/sharepoint/dsp" version="1.0" exclude-result-prefixes="xsl msxsl ddwrt" xmlns:ddwrt="http://schemas.microsoft.com/WebParts/v2/DataView/runtime" xmlns:asp="http://schemas.microsoft.com/ASPNET/20" xmlns:__designer="http://schemas.microsoft.com/WebParts/v2/DataView/designer" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:sharepoint="Microsoft.SharePoint.WebControls" xmlns:ddwrt2="urn:frontpage:internal">
                                     <xsl:output method="html" indent="no" />
                                     <xsl:decimal-format nan="" />
-                                    <xsl:param name="dvt_apos">&apos;</xsl:param>
+                                    <xsl:param name="dvt_apos">'</xsl:param>
                                     <xsl:param name="ManualRefresh"></xsl:param>
                                     <xsl:variable name="dvt_1_automode">0</xsl:variable>
                                     <xsl:template match="/" xmlns:x="http://www.w3.org/2001/XMLSchema" xmlns:dsp="http://schemas.microsoft.com/sharepoint/dsp" xmlns:asp="http://schemas.microsoft.com/ASPNET/20" xmlns:__designer="http://schemas.microsoft.com/WebParts/v2/DataView/designer" xmlns:sharepoint="Microsoft.SharePoint.WebControls">
@@ -78,8 +75,8 @@
                                                     </xsl:call-template>
                                                 </table>
                                             </span>
-                                            <sharepoint:attachmentupload runat="server" controlmode="New" />
-                                            <sharepoint:itemhiddenversion runat="server" controlmode="New" />
+                                            <sharepoint:attachmentupload runat="server" controlmode="Edit" />
+                                            <sharepoint:itemhiddenversion runat="server" controlmode="Edit" />
                                         </div>
                                     </xsl:template>
                                     <xsl:template name="dvt_1.body">
@@ -90,11 +87,11 @@
                     <tr>
                         <td width="99%" class="ms-toolbar" nowrap="nowrap"><img src="/_layouts/15/images/blank.gif" width="1" height="18" /></td>
                         <td class="ms-toolbar" nowrap="nowrap">
-                            <SharePoint:SaveButton runat="server" ControlMode="New" id="savebutton1" />
+                            <SharePoint:SaveButton runat="server" ControlMode="Edit" id="savebutton1" />
                         </td>
-                        <td class="ms-separator">&#160;</td>
+                        <td class="ms-separator"> </td>
                         <td class="ms-toolbar" nowrap="nowrap" align="right">
-                            <SharePoint:GoBackButton runat="server" ControlMode="New" id="gobackbutton1" />
+                            <SharePoint:GoBackButton runat="server" ControlMode="Edit" id="gobackbutton1" />
                         </td>
                     </tr>
                 </table>
@@ -102,22 +99,27 @@
         </tr>
         <tr>
             <td class="ms-toolbar" nowrap="nowrap">
-                <sharepoint:formtoolbar runat="server" controlmode="New" />
-                <sharepoint:itemvalidationfailedmessage runat="server" controlmode="New" />
+                <sharepoint:formtoolbar runat="server" controlmode="Edit" />
+                <sharepoint:itemvalidationfailedmessage runat="server" controlmode="Edit" />
             </td>
         </tr>
-        <xsl:call-template name="dvt_1.rowedit" />
+        <xsl:for-each select="$Rows">
+            <xsl:call-template name="dvt_1.rowedit" />
+        </xsl:for-each>
         <tr>
             <td class="ms-toolbar" nowrap="nowrap">
                 <table>
                     <tr>
+                        <td class="ms-descriptiontext" nowrap="nowrap">
+                            <sharepoint:createdmodifiedinfo controlmode="Edit" runat="server" />
+                        </td>
                         <td width="99%" class="ms-toolbar" nowrap="nowrap"><img src="/_layouts/15/images/blank.gif" width="1" height="18" /></td>
                         <td class="ms-toolbar" nowrap="nowrap">
-                            <SharePoint:SaveButton runat="server" ControlMode="New" id="savebutton2" />
+                            <SharePoint:SaveButton runat="server" ControlMode="Edit" id="savebutton2" />
                         </td>
-                        <td class="ms-separator">&#160;</td>
+                        <td class="ms-separator"> </td>
                         <td class="ms-toolbar" nowrap="nowrap" align="right">
-                            <SharePoint:GoBackButton runat="server" ControlMode="New" id="gobackbutton2" />
+                            <SharePoint:GoBackButton runat="server" ControlMode="Edit" id="gobackbutton2" />
                         </td>
                     </tr>
                 </table>
@@ -132,13 +134,12 @@
                         <!--<tr>
                             <td width="190px" valign="top" class="ms-formlabel">
                                 <H3 class="ms-standardheader">
-                                    <nobr>Title<span class="ms-formvalidation"> *</span>
-                                    </nobr>
+                                    <nobr>Title</nobr>
                                 </H3>
                             </td>
                             <td width="400px" valign="top" class="ms-formbody">
-                                <SharePoint:FormField runat="server" id="ff1{$Pos}" ControlMode="New" FieldName="Title" __designer:bind="{ddwrt:DataBind('i',concat('ff1',$Pos),'Value','ValueChanged','ID',ddwrt:EscapeDelims(string(@ID)),'@Title')}"/>
-                                <SharePoint:FieldDescription runat="server" id="ff1description{$Pos}" FieldName="Title" ControlMode="New"/>
+                                <SharePoint:FormField runat="server" id="ff1{$Pos}" ControlMode="Edit" FieldName="Title" __designer:bind="{ddwrt:DataBind('u',concat('ff1',$Pos),'Value','ValueChanged','ID',ddwrt:EscapeDelims(string(@ID)),'@Title')}"/>
+                                <SharePoint:FieldDescription runat="server" id="ff1description{$Pos}" FieldName="Title" ControlMode="Edit"/>
                             </td>
                         </tr>-->
                         <tr>
@@ -149,26 +150,13 @@
                             <td width="190px" valign="top" class="ms-formlabel">
                                 <h3 class="ms-standardheader">
                                     <nobr>
-                                        Year<span class="ms-formvalidation"></span>
-                                    </nobr>
-                                </h3>
-                            </td>
-                            <td width="400px" valign="top" class="ms-formbody">
-                                <SharePoint:FormField runat="server" id="ff10{$Pos}" ControlMode="New" FieldName="Year" __designer:bind="{ddwrt:DataBind('i',concat('ff10',$Pos),'Value','ValueChanged','ID',ddwrt:EscapeDelims(string(@ID)),'@Year')}" />
-                                <SharePoint:FieldDescription runat="server" id="ff10description{$Pos}" FieldName="Year" ControlMode="New" />
-                            </td>
-                        </tr>
-                        <tr title="oForm">
-                            <td width="190px" valign="top" class="ms-formlabel">
-                                <h3 class="ms-standardheader">
-                                    <nobr>
                                         BG<span class="ms-formvalidation"> *</span>
                                     </nobr>
                                 </h3>
                             </td>
                             <td width="400px" valign="top" class="ms-formbody">
-                                <SharePoint:FormField runat="server" id="ff2{$Pos}" ControlMode="New" FieldName="BG" __designer:bind="{ddwrt:DataBind('i',concat('ff2',$Pos),'Value','ValueChanged','ID',ddwrt:EscapeDelims(string(@ID)),'@BG')}" />
-                                <SharePoint:FieldDescription runat="server" id="ff2description{$Pos}" FieldName="BG" ControlMode="New" />
+                                <SharePoint:FormField runat="server" id="ff2{$Pos}" ControlMode="Edit" FieldName="BG" __designer:bind="{ddwrt:DataBind('u',concat('ff2',$Pos),'Value','ValueChanged','ID',ddwrt:EscapeDelims(string(@ID)),'@BG')}" />
+                                <SharePoint:FieldDescription runat="server" id="ff2description{$Pos}" FieldName="BG" ControlMode="Edit" />
                             </td>
                         </tr>
                         <tr title="oForm">
@@ -178,8 +166,8 @@
                                 </h3>
                             </td>
                             <td width="400px" valign="top" class="ms-formbody">
-                                <SharePoint:FormField runat="server" id="ff3{$Pos}" ControlMode="New" FieldName="Sales_x0020_Person" __designer:bind="{ddwrt:DataBind('i',concat('ff3',$Pos),'Value','ValueChanged','ID',ddwrt:EscapeDelims(string(@ID)),'@Sales_x0020_Person')}" />
-                                <SharePoint:FieldDescription runat="server" id="ff3description{$Pos}" FieldName="Sales_x0020_Person" ControlMode="New" />
+                                <SharePoint:FormField runat="server" id="ff3{$Pos}" ControlMode="Edit" FieldName="Sales_x0020_Person" __designer:bind="{ddwrt:DataBind('u',concat('ff3',$Pos),'Value','ValueChanged','ID',ddwrt:EscapeDelims(string(@ID)),'@Sales_x0020_Person')}" />
+                                <SharePoint:FieldDescription runat="server" id="ff3description{$Pos}" FieldName="Sales_x0020_Person" ControlMode="Edit" />
                             </td>
                         </tr>
                         <tr title="oForm">
@@ -189,8 +177,8 @@
                                 </h3>
                             </td>
                             <td width="400px" valign="top" class="ms-formbody">
-                                <SharePoint:FormField runat="server" id="ff4{$Pos}" ControlMode="New" FieldName="End_x0020_Customer" __designer:bind="{ddwrt:DataBind('i',concat('ff4',$Pos),'Value','ValueChanged','ID',ddwrt:EscapeDelims(string(@ID)),'@End_x0020_Customer')}" />
-                                <SharePoint:FieldDescription runat="server" id="ff4description{$Pos}" FieldName="End_x0020_Customer" ControlMode="New" />
+                                <SharePoint:FormField runat="server" id="ff4{$Pos}" ControlMode="Edit" FieldName="End_x0020_Customer" __designer:bind="{ddwrt:DataBind('u',concat('ff4',$Pos),'Value','ValueChanged','ID',ddwrt:EscapeDelims(string(@ID)),'@End_x0020_Customer')}" />
+                                <SharePoint:FieldDescription runat="server" id="ff4description{$Pos}" FieldName="End_x0020_Customer" ControlMode="Edit" />
                             </td>
                         </tr>
                         <tr title="oForm">
@@ -200,8 +188,8 @@
                                 </h3>
                             </td>
                             <td width="400px" valign="top" class="ms-formbody">
-                                <SharePoint:FormField runat="server" id="ff5{$Pos}" ControlMode="New" FieldName="Material" __designer:bind="{ddwrt:DataBind('i',concat('ff5',$Pos),'Value','ValueChanged','ID',ddwrt:EscapeDelims(string(@ID)),'@Material')}" />
-                                <SharePoint:FieldDescription runat="server" id="ff5description{$Pos}" FieldName="Material" ControlMode="New" />
+                                <SharePoint:FormField runat="server" id="ff5{$Pos}" ControlMode="Edit" FieldName="Material" __designer:bind="{ddwrt:DataBind('u',concat('ff5',$Pos),'Value','ValueChanged','ID',ddwrt:EscapeDelims(string(@ID)),'@Material')}" />
+                                <SharePoint:FieldDescription runat="server" id="ff5description{$Pos}" FieldName="Material" ControlMode="Edit" />
                             </td>
                         </tr>
                         <tr title="oForm">
@@ -211,8 +199,8 @@
                                 </h3>
                             </td>
                             <td width="400px" valign="top" class="ms-formbody">
-                                <SharePoint:FormField runat="server" id="ff6{$Pos}" ControlMode="New" FieldName="Profit_x0020_Center" __designer:bind="{ddwrt:DataBind('i',concat('ff6',$Pos),'Value','ValueChanged','ID',ddwrt:EscapeDelims(string(@ID)),'@Profit_x0020_Center')}" />
-                                <SharePoint:FieldDescription runat="server" id="ff6description{$Pos}" FieldName="Profit_x0020_Center" ControlMode="New" />
+                                <SharePoint:FormField runat="server" id="ff6{$Pos}" ControlMode="Edit" FieldName="Profit_x0020_Center" __designer:bind="{ddwrt:DataBind('u',concat('ff6',$Pos),'Value','ValueChanged','ID',ddwrt:EscapeDelims(string(@ID)),'@Profit_x0020_Center')}" />
+                                <SharePoint:FieldDescription runat="server" id="ff6description{$Pos}" FieldName="Profit_x0020_Center" ControlMode="Edit" />
                             </td>
                         </tr>
                         <tr title="oForm">
@@ -222,8 +210,8 @@
                                 </h3>
                             </td>
                             <td width="400px" valign="top" class="ms-formbody">
-                                <SharePoint:FormField runat="server" id="ff7{$Pos}" ControlMode="New" FieldName="New_x0020_Sales_x0020_Person" __designer:bind="{ddwrt:DataBind('i',concat('ff7',$Pos),'Value','ValueChanged','ID',ddwrt:EscapeDelims(string(@ID)),'@New_x0020_Sales_x0020_Person')}" />
-                                <SharePoint:FieldDescription runat="server" id="ff7description{$Pos}" FieldName="New_x0020_Sales_x0020_Person" ControlMode="New" />
+                                <SharePoint:FormField runat="server" id="ff7{$Pos}" ControlMode="Edit" FieldName="New_x0020_Sales_x0020_Person" __designer:bind="{ddwrt:DataBind('u',concat('ff7',$Pos),'Value','ValueChanged','ID',ddwrt:EscapeDelims(string(@ID)),'@New_x0020_Sales_x0020_Person')}" />
+                                <SharePoint:FieldDescription runat="server" id="ff7description{$Pos}" FieldName="New_x0020_Sales_x0020_Person" ControlMode="Edit" />
                             </td>
                         </tr>
                         <tr title="oForm">
@@ -233,8 +221,8 @@
                                 </h3>
                             </td>
                             <td width="400px" valign="top" class="ms-formbody">
-                                <SharePoint:FormField runat="server" id="ff8{$Pos}" ControlMode="New" FieldName="New_x0020_End_x0020_Customer" __designer:bind="{ddwrt:DataBind('i',concat('ff8',$Pos),'Value','ValueChanged','ID',ddwrt:EscapeDelims(string(@ID)),'@New_x0020_End_x0020_Customer')}" />
-                                <SharePoint:FieldDescription runat="server" id="ff8description{$Pos}" FieldName="New_x0020_End_x0020_Customer" ControlMode="New" />
+                                <SharePoint:FormField runat="server" id="ff8{$Pos}" ControlMode="Edit" FieldName="New_x0020_End_x0020_Customer" __designer:bind="{ddwrt:DataBind('u',concat('ff8',$Pos),'Value','ValueChanged','ID',ddwrt:EscapeDelims(string(@ID)),'@New_x0020_End_x0020_Customer')}" />
+                                <SharePoint:FieldDescription runat="server" id="ff8description{$Pos}" FieldName="New_x0020_End_x0020_Customer" ControlMode="Edit" />
                             </td>
                         </tr>
                         <tr title="oForm">
@@ -244,19 +232,32 @@
                                 </h3>
                             </td>
                             <td width="400px" valign="top" class="ms-formbody">
-                                <SharePoint:FormField runat="server" id="ff9{$Pos}" ControlMode="New" FieldName="New_x0020_Material" __designer:bind="{ddwrt:DataBind('i',concat('ff9',$Pos),'Value','ValueChanged','ID',ddwrt:EscapeDelims(string(@ID)),'@New_x0020_Material')}" />
-                                <SharePoint:FieldDescription runat="server" id="ff9description{$Pos}" FieldName="New_x0020_Material" ControlMode="New" />
+                                <SharePoint:FormField runat="server" id="ff9{$Pos}" ControlMode="Edit" FieldName="New_x0020_Material" __designer:bind="{ddwrt:DataBind('u',concat('ff9',$Pos),'Value','ValueChanged','ID',ddwrt:EscapeDelims(string(@ID)),'@New_x0020_Material')}" />
+                                <SharePoint:FieldDescription runat="server" id="ff9description{$Pos}" FieldName="New_x0020_Material" ControlMode="Edit" />
                             </td>
                         </tr>
                         <tr title="oForm">
                             <td width="190px" valign="top" class="ms-formlabel">
                                 <h3 class="ms-standardheader">
-                                    <nobr>Effective Year Month</nobr>
+                                    <nobr>Year</nobr>
                                 </h3>
                             </td>
                             <td width="400px" valign="top" class="ms-formbody">
-                                <SharePoint:FormField runat="server" id="ff11{$Pos}" ControlMode="New" FieldName="Effective_x0020_Year_x0020_Month" __designer:bind="{ddwrt:DataBind('i',concat('ff11',$Pos),'Value','ValueChanged','ID',ddwrt:EscapeDelims(string(@ID)),'@Effective_x0020_Year_x0020_Month')}" />
-                                <SharePoint:FieldDescription runat="server" id="ff11description{$Pos}" FieldName="Effective_x0020_Year_x0020_Month" ControlMode="New" />
+                                <SharePoint:FormField runat="server" id="ff10{$Pos}" ControlMode="Edit" FieldName="Year" __designer:bind="{ddwrt:DataBind('u',concat('ff10',$Pos),'Value','ValueChanged','ID',ddwrt:EscapeDelims(string(@ID)),'@Year')}" />
+                                <SharePoint:FieldDescription runat="server" id="ff10description{$Pos}" FieldName="Year" ControlMode="Edit" />
+                            </td>
+                        </tr>
+                        <tr title="oForm">
+                            <td width="190px" valign="top" class="ms-formlabel">
+                                <h3 class="ms-standardheader">
+                                    <nobr>
+                                        Effective Year Month<span class="ms-formvalidation"> *</span>
+                                    </nobr>
+                                </h3>
+                            </td>
+                            <td width="400px" valign="top" class="ms-formbody">
+                                <SharePoint:FormField runat="server" id="ff11{$Pos}" ControlMode="Edit" FieldName="Effective_x0020_Year_x0020_Month" __designer:bind="{ddwrt:DataBind('u',concat('ff11',$Pos),'Value','ValueChanged','ID',ddwrt:EscapeDelims(string(@ID)),'@Effective_x0020_Year_x0020_Month')}" />
+                                <SharePoint:FieldDescription runat="server" id="ff11description{$Pos}" FieldName="Effective_x0020_Year_x0020_Month" ControlMode="Edit" />
                             </td>
                         </tr>
                         <tr title="oForm">
@@ -266,8 +267,8 @@
                                 </h3>
                             </td>
                             <td width="400px" valign="top" class="ms-formbody">
-                                <SharePoint:FormField runat="server" id="ff12{$Pos}" ControlMode="New" FieldName="Approval_x0020_Status" __designer:bind="{ddwrt:DataBind('i',concat('ff12',$Pos),'Value','ValueChanged','ID',ddwrt:EscapeDelims(string(@ID)),'@Approval_x0020_Status')}" />
-                                <SharePoint:FieldDescription runat="server" id="ff12description{$Pos}" FieldName="Approval_x0020_Status" ControlMode="New" />
+                                <SharePoint:FormField runat="server" id="ff12{$Pos}" ControlMode="Edit" FieldName="Approval_x0020_Status" __designer:bind="{ddwrt:DataBind('u',concat('ff12',$Pos),'Value','ValueChanged','ID',ddwrt:EscapeDelims(string(@ID)),'@Approval_x0020_Status')}" />
+                                <SharePoint:FieldDescription runat="server" id="ff12description{$Pos}" FieldName="Approval_x0020_Status" ControlMode="Edit" />
                             </td>
                         </tr>
                         <tr title="oForm">
@@ -277,17 +278,16 @@
                                 </h3>
                             </td>
                             <td width="400px" valign="top" class="ms-formbody">
-                                <SharePoint:FormField runat="server" id="ff13{$Pos}" ControlMode="New" FieldName="Company" __designer:bind="{ddwrt:DataBind('i',concat('ff13',$Pos),'Value','ValueChanged','ID',ddwrt:EscapeDelims(string(@ID)),'@Company')}" />
-                                <SharePoint:FieldDescription runat="server" id="ff13description{$Pos}" FieldName="Company" ControlMode="New" />
+                                <SharePoint:FormField runat="server" id="ff13{$Pos}" ControlMode="Edit" FieldName="Company" __designer:bind="{ddwrt:DataBind('u',concat('ff13',$Pos),'Value','ValueChanged','ID',ddwrt:EscapeDelims(string(@ID)),'@Company')}" />
+                                <SharePoint:FieldDescription runat="server" id="ff13description{$Pos}" FieldName="Company" ControlMode="Edit" />
                             </td>
                         </tr>
-
                         <tr id="idAttachmentsRow">
                             <td nowrap="true" valign="top" class="ms-formlabel" width="20%">
-                                <sharepoint:fieldlabel controlmode="New" fieldname="Attachments" runat="server" />
+                                <sharepoint:fieldlabel controlmode="Edit" fieldname="Attachments" runat="server" />
                             </td>
                             <td valign="top" class="ms-formbody" width="80%">
-                                <SharePoint:FormField runat="server" id="AttachmentsField" ControlMode="New" FieldName="Attachments" __designer:bind="{ddwrt:DataBind('i','AttachmentsField','Value','ValueChanged','ID',ddwrt:EscapeDelims(string(@ID)),'@Attachments')}" />
+                                <SharePoint:FormField runat="server" id="AttachmentsField" ControlMode="Edit" FieldName="Attachments" __designer:bind="{ddwrt:DataBind('u','AttachmentsField','Value','ValueChanged','ID',ddwrt:EscapeDelims(string(@ID)),'@Attachments')}" />
                                 <script>
                                     var elm = document.getElementById(&quot;idAttachmentsTable&quot;);
                                     if (elm == null || elm.rows.length == 0)

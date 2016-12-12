@@ -6,29 +6,75 @@ app.controller("myCtrl", function ($scope, $http) {
     var userUrl = listServer + "_api/SP.UserProfiles.PeopleManager/GetMyProperties";
     //var profileListUrl = listServer + "_api/web/lists/getbytitle('Sales Person Profile')/items";
     var profileListUrl = dataService + "vSalesPersonProfile";
-    var dataUrl = dataService + "ActualBudget";
+    var dataUrl = dataService + "getActualBudget";
 
     var BG = $("[title='BG Required Field']");
-
+    var Company = $("[title='Company Required Field']");
     var SalesPerson = $("[title='Sales Person']");
     var EndCustomer = $("[title='End Customer']");
     var Material = $("[title='Material']");
     var ProfitCenter = $("[title='Profit Center']");
-
     var Year = $("[title='Year']");
-
     var NewSalesPerson = $("[title='New Sales Person']");
     var NewEndCustomer = $("[title='New End Customer']");
     var NewMaterial = $("[title='New Material']");
-
     var YearMonth = $("[title='Effective Year Month Required Field']");
+    var ApprovalStatus = $("[title='Approval Status']");
 
     var msg = $("#msg");
 
-    $scope.selectedYear = "2016";
-    Year.val("2016");
-    $scope.selectedMonth = "01";
-    YearMonth.val("201601");
+    function load() {
+        if (NewSalesPerson.val() == "" && NewEndCustomer.val() == "" && NewMaterial.val() == "") {
+            $http({
+                method: "GET",
+                url: userUrl,
+                headers: {
+                    "accept": "application/json;odata=verbose"
+                }
+            }).then(function mySucces(response) {
+                setBG(response.data.d.UserProfileProperties.results.find(getDept).Value);
+                var c = response.data.d.UserProfileProperties.results.find(getCom).Value;
+                if (c == "ALI") {
+                    c = "DPC";
+                }
+                setCompany(c);
+            }, function myError(response) {
+                msg.text(response.status);
+            });
+            $scope.selectedYear = "2016";
+            Year.val("2016");
+            $scope.selectedMonth = "01";
+            YearMonth.val("201601");
+        } else {
+            setBG(BG.val());
+            setCompany(Company.val());
+            $scope.selectedSalesPerson = SalesPerson.val();
+            $scope.selectedEndCustomer = EndCustomer.val();
+            $scope.selectedMaterial = Material.val();
+            $scope.selectedProfitCenter = ProfitCenter.val();
+            $scope.selectedYear = Year.val();
+            $scope.selectedNewSalesPerson = NewSalesPerson.val();
+            $scope.selectedNewEndCustomer = NewEndCustomer.val();
+            $scope.selectedNewMaterial = NewMaterial.val();
+            $scope.selectedMonth = YearMonth.val().substring(4, 6);
+            if (ApprovalStatus.val() == "Approved") {
+                msg.text("The adjustment has taken effect, can't be edited.");
+                $("#btSave").prop("disabled", true);
+            }
+        }
+    };
+    load();
+
+    function setBG(value) {
+        BG.val(value);
+        $scope.BG = value;
+        loadOption();
+    };
+    function setCompany(value) {
+        Company.val(value);
+        $scope.Company = value;
+        loadOption();
+    };
 
     $scope.selectedChanged = function (field) {
         if (field == "SalesPerson") {
@@ -72,13 +118,18 @@ app.controller("myCtrl", function ($scope, $http) {
             setBG(value);
             return;
         }
+        if (type == "Company") {
+            setCompany(value);
+            return;
+        }
+
         if (value.length >= 1) {
             var field = type;
             if (field.startsWith("New")) {
                 field = field.substring(3, field.length);
             }
             var filter = "indexof(" + field + ", '" + value + "') ge 0";
-            searchOptionByBG(filter, type);
+            searchOption(filter, type);
         }
         else if (value.length < 1) {
             setList(type, []);
@@ -89,7 +140,7 @@ app.controller("myCtrl", function ($scope, $http) {
         event.stopPropagation();
     };
 
-    function searchOptionByBG(filter, type) {
+    function searchOption(filter, type) {
         if (filter != '') {
             filter = " and " + filter;
         }
@@ -97,7 +148,8 @@ app.controller("myCtrl", function ($scope, $http) {
         if (view.startsWith("New")) {
             view = view.substring(3, view.length);
         }
-        var urlStr = dataService + "v" + view + "ByBG?$filter=BG eq '" + BG.val() + "'" + filter;
+        var urlStr = dataService + "v" + view + "4Adjustment?$filter=BG eq '" + BG.val() + "' and Company eq '" + Company.val() + "'" + filter;
+        //msg.text(urlStr);
         $http({
             method: "GET",
             url: urlStr,
@@ -114,26 +166,13 @@ app.controller("myCtrl", function ($scope, $http) {
     function getDept(prop) {
         return prop.Key == "Department";
     };
-
-    $http({
-        method: "GET",
-        url: userUrl,
-        headers: {
-            "accept": "application/json;odata=verbose"
-        }
-    }).then(function mySucces(response) {
-        setBG(response.data.d.UserProfileProperties.results.find(getDept).Value);
-    }, function myError(response) {
-        msg.text(response.status);
-    });
-    function setBG(value) {
-        BG.val(value);
-        $scope.BG = value;
-        loadOption(value);
+    function getCom(prop) {
+        return prop.Key == "Company";
     };
 
-    function loadOption(e) {
-        var url = profileListUrl + "?$top=999&$orderby=DomainAccount&$filter=BG eq '" + e + "'";
+    function loadOption() {
+        var url = profileListUrl + "?$top=999&$orderby=DomainAccount&$filter=BG eq '" + BG.val() + "' and Company eq '" + Company.val() + "'";
+        //msg.text(url);
         $http({
             method: "GET",
             url: url,
@@ -143,7 +182,7 @@ app.controller("myCtrl", function ($scope, $http) {
         }).then(function mySucces(response) {
             $scope.SalesPersons = response.data.d;
         }, function myError(response) {
-            msg.text(response.status);
+            msg.text(response.status + url);
         });
     };
 
@@ -158,6 +197,11 @@ app.controller("myCtrl", function ($scope, $http) {
     function checkValue() {
         if (NewSalesPerson.val() == "" && NewEndCustomer.val() == "" && NewMaterial.val() == "") {
             msg.text("New Sales Person and New End Customer and New Material can't be empty at the same time");
+            alert(msg.text());
+            return false;
+        }
+        if (NewEndCustomer.val() != "" && (EndCustomer.val().toUpperCase() != "OTHERS" || EndCustomer.val().toUpperCase() != "DISTRIBUTOR OTHERS")) {
+            msg.text("Only allow to change End Customer when End Customer is OTHERS");
             alert(msg.text());
             return false;
         }
@@ -190,7 +234,7 @@ app.controller("myCtrl", function ($scope, $http) {
         }
 
         $scope.status = "loading";
-        var condition = "Year='" + Year.val() + "'&BG='" + BG.val() + "'";
+        var condition = "Year='" + Year.val() + "'&BG='" + BG.val() + "'&Company='" + Company.val() + "'";
         if (SalesPerson.val() != "") {
             condition += "&SalesPerson='" + SalesPerson.val() + "'";
         }
@@ -206,7 +250,7 @@ app.controller("myCtrl", function ($scope, $http) {
         $scope.status = "loading:" + condition;
         $http({
             method: "GET",
-            url: dataService + "getActualBudget?" + condition,
+            url: dataUrl + "?" + condition,
             headers: {
                 'Content-Type': 'application/json; charset=utf-8'
             }

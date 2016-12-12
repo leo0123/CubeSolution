@@ -14,7 +14,7 @@
             <td colspan="2">
                 <input type="button" value=" Save " id="btSave" class="ms-ButtonHeightWidth" target="_self" />
                 <input type="button" value=" Cancel " id="btCancel" class="ms-ButtonHeightWidth" target="_self" />
-                <div id="msg"></div>
+                <div id="msg" style="color:red;"></div>
             </td>
         </tr>
         <tr>
@@ -22,6 +22,14 @@
             <td>
                 <input ng-model="BG"
                        ng-change="inputChanged(BG,'BG')"
+                       ng-keydown="onSearchChange($event)" />
+            </td>
+        </tr>
+        <tr>
+            <td width="150px">Company</td>
+            <td>
+                <input ng-model="Company"
+                       ng-change="inputChanged(Company,'Company')"
                        ng-keydown="onSearchChange($event)" />
             </td>
         </tr>
@@ -162,15 +170,17 @@
         </tr>
         <tr>
             <td colspan="2">
-                <div>{{status}}</div>
+                <div style="color:blue;">{{status}}</div>
                 <table border="1">
                     <tr>
                         <td>Year</td>
                         <td>BG</td>
+                        <td>Company</td>
                         <td>SalesPerson</td>
                         <td>EndCustomer</td>
                         <td>Material</td>
                         <td>ProfitCenter</td>
+                        <td>SalesType</td>
                         <td>JanAmount</td>
                         <td>FebAmount</td>
                         <td>MarAmount</td>
@@ -187,10 +197,12 @@
                     <tr ng-repeat="x in ActualBudget | orderBy : 'EndCustomer'">
                         <td>{{x.Year}}</td>
                         <td>{{x.BG}}</td>
+                        <td>{{x.Company}}</td>
                         <td>{{x.SalesPerson}}</td>
                         <td>{{x.EndCustomer}}</td>
                         <td>{{x.Material}}</td>
                         <td>{{x.ProfitCenter}}</td>
+                        <td>{{x.SalesType}}</td>
                         <td>{{x.JanAmount}}</td>
                         <td>{{x.FebAmount}}</td>
                         <td>{{x.MarAmount}}</td>
