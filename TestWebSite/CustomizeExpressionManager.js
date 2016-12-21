@@ -30,28 +30,28 @@
     fillList = function (group, list, lists) {
         var selectedList;
         switch (group.Field) {
-            case 'BGCode':
+            case 'BG':
                 selectedList = lists.selectedBG;
                 break;
-            case 'ProfitCenterCode':
+            case 'ProfitCenter':
                 selectedList = lists.selectedProfitCenter;
                 break;
             case 'SalesP':
                 selectedList = lists.selectedSalesP;
                 break;
-            case 'EndCustomerName':
+            case '[End Customer]':
                 selectedList = lists.selectedEndCustomer;
                 break;
-            case 'SoldToCustomerName':
+            case 'CustName':
                 selectedList = lists.selectedSoldToCustomer;
                 break;
             case 'Office':
                 selectedList = lists.selectedOffice;
                 break;
-            case 'SalesOffice':
+            case '[Sales Office]':
                 selectedList = lists.selectedSalesOffice;
                 break;
-            case 'SalesTypeName':
+            case '[Sales Type]':
                 selectedList = lists.selectedSalesType;
                 break;
         }

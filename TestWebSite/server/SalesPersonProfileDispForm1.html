@@ -22,7 +22,7 @@
             <td>
                 <WebPartPages:WebPartZone runat="server" FrameType="None" ID="Main" Title="loc:Main">
                     <zonetemplate>
-                        <WebPartPages:DataFormWebPart runat="server" EnableOriginalValue="False" DisplayName="Sales Person Profile" ViewFlag="1048584" ViewContentTypeId="" Default="FALSE" ListName="{D4374C4E-0308-4DDB-A134-F9F91F44BE54}" ListId="d4374c4e-0308-4ddb-a134-f9f91f44be54" PageType="PAGE_DISPLAYFORM" PageSize="-1" UseSQLDataSourcePaging="True" DataSourceID="" ShowWithSampleData="False" AsyncRefresh="False" ManualRefresh="False" AutoRefresh="False" AutoRefreshInterval="60" NoDefaultStyle="TRUE" InitialAsyncDataFetch="False" Title="Sales Person Profile" FrameType="None" SuppressWebPartChrome="False" Description="" IsIncluded="True" PartOrder="2" FrameState="Normal" AllowRemove="True" AllowZoneChange="True" AllowMinimize="True" AllowConnect="True" AllowEdit="True" AllowHide="True" IsVisible="True" DetailLink="" HelpLink="" HelpMode="Modeless" Dir="Default" PartImageSmall="" MissingAssembly="Cannot import this Web Part." PartImageLarge="" IsIncludedFilter="" ExportControlledProperties="True" ConnectionID="00000000-0000-0000-0000-000000000000" ID="g_264eda61_57d1_4591_8994_6bba532c98aa" ChromeType="None" ExportMode="All" __MarkupType="vsattributemarkup" __WebPartId="{264EDA61-57D1-4591-8994-6BBA532C98AA}" __AllowXSLTEditing="true" WebPart="true" Height="" Width="">
+                        <WebPartPages:DataFormWebPart runat="server" EnableOriginalValue="False" DisplayName="Sales Person Profile" ViewFlag="1048584" ViewContentTypeId="" Default="FALSE" ListUrl="" ListDisplayName="" ListName="{D4374C4E-0308-4DDB-A134-F9F91F44BE54}" ListId="d4374c4e-0308-4ddb-a134-f9f91f44be54" PageType="PAGE_DISPLAYFORM" PageSize="-1" UseSQLDataSourcePaging="True" DataSourceID="" ShowWithSampleData="False" AsyncRefresh="False" ManualRefresh="False" AutoRefresh="False" AutoRefreshInterval="60" NoDefaultStyle="TRUE" InitialAsyncDataFetch="False" Title="Sales Person Profile" FrameType="None" SuppressWebPartChrome="False" Description="" IsIncluded="True" PartOrder="2" FrameState="Normal" AllowRemove="True" AllowZoneChange="True" AllowMinimize="True" AllowConnect="True" AllowEdit="True" AllowHide="True" IsVisible="True" DetailLink="" HelpLink="" HelpMode="Modeless" Dir="Default" PartImageSmall="" MissingAssembly="Cannot import this Web Part." PartImageLarge="" IsIncludedFilter="" ExportControlledProperties="True" ConnectionID="00000000-0000-0000-0000-000000000000" ID="g_264eda61_57d1_4591_8994_6bba532c98aa" ChromeType="None" ExportMode="All" __MarkupType="vsattributemarkup" __WebPartId="{264EDA61-57D1-4591-8994-6BBA532C98AA}" __AllowXSLTEditing="true" WebPart="true" Height="" Width="">
                             <datasources>
                                 <sharepoint:spdatasource runat="server" datasourcemode="ListItem" selectcommand="&lt;View&gt;&lt;Query&gt;&lt;Where&gt;&lt;Eq&gt;&lt;FieldRef Name=&quot;ContentType&quot;/&gt;&lt;Value Type=&quot;Text&quot;&gt;Item&lt;/Value&gt;&lt;/Eq&gt;&lt;/Where&gt;&lt;/Query&gt;&lt;/View&gt;" useinternalname="True" useserverdataformat="True">
                                     <selectparameters>
@@ -37,6 +37,9 @@
                                 </sharepoint:spdatasource>
                             </datasources>
                             <xsl>
+
+
+
 
 
                                 <xsl:stylesheet xmlns:x="http://www.w3.org/2001/XMLSchema" xmlns:dsp="http://schemas.microsoft.com/sharepoint/dsp" version="1.0" exclude-result-prefixes="xsl msxsl ddwrt" xmlns:ddwrt="http://schemas.microsoft.com/WebParts/v2/DataView/runtime" xmlns:asp="http://schemas.microsoft.com/ASPNET/20" xmlns:__designer="http://schemas.microsoft.com/WebParts/v2/DataView/designer" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:sharepoint="Microsoft.SharePoint.WebControls" xmlns:ddwrt2="urn:frontpage:internal">
@@ -133,8 +136,8 @@
                                 </h3>
                             </td>
                             <td width="400px" valign="top" class="ms-formbody">
-                                <xsl:value-of select="@Title" />
-                                <div id="CustomerList"><xsl:value-of select="@Title" /></div>
+                                <div id="DomainAccount"><xsl:value-of select="@Title" /></div>
+                                <input type="button" value="CustomerList" id="btCustomerList" class="ms-ButtonHeightWidth" target="_self" />
                                 <div id="CustomerListDiv"></div>
                             </td>
                         </tr>
@@ -151,32 +154,21 @@
                         <tr>
                             <td width="190px" valign="top" class="ms-formlabel">
                                 <h3 class="ms-standardheader">
-                                    <nobr>SAP Employee ID</nobr>
-                                </h3>
-                            </td>
-                            <td width="400px" valign="top" class="ms-formbody">
-                                <xsl:value-of select="@SAP_x0020_Employee_x0020_ID" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td width="190px" valign="top" class="ms-formlabel">
-                                <h3 class="ms-standardheader">
                                     <nobr>Department</nobr>
                                 </h3>
                             </td>
                             <td width="400px" valign="top" class="ms-formbody">
-                                <xsl:value-of select="@Department" />
+                                <div id="Department"><xsl:value-of select="@Department" /></div>
                             </td>
                         </tr>
-
                         <tr>
                             <td width="190px" valign="top" class="ms-formlabel">
                                 <h3 class="ms-standardheader">
-                                    <nobr>Employee Code</nobr>
+                                    <nobr>Company</nobr>
                                 </h3>
                             </td>
                             <td width="400px" valign="top" class="ms-formbody">
-                                <xsl:value-of select="@Employee_x0020_Code" />
+                                <div id="Company"><xsl:value-of select="@Company" /></div>
                             </td>
                         </tr>
                         <tr>
@@ -192,11 +184,21 @@
                         <tr>
                             <td width="190px" valign="top" class="ms-formlabel">
                                 <h3 class="ms-standardheader">
-                                    <nobr>old Email</nobr>
+                                    <nobr>Employee ID</nobr>
                                 </h3>
                             </td>
                             <td width="400px" valign="top" class="ms-formbody">
-                                <xsl:value-of select="@old_x0020_Email" />
+                                <xsl:value-of select="@Employee_x0020_ID" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="190px" valign="top" class="ms-formlabel">
+                                <h3 class="ms-standardheader">
+                                    <nobr>Employee Code</nobr>
+                                </h3>
+                            </td>
+                            <td width="400px" valign="top" class="ms-formbody">
+                                <xsl:value-of select="@Employee_x0020_Code" />
                             </td>
                         </tr>
                         <tr>
@@ -207,6 +209,36 @@
                             </td>
                             <td width="400px" valign="top" class="ms-formbody">
                                 <xsl:value-of select="@SalesP" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="190px" valign="top" class="ms-formlabel">
+                                <h3 class="ms-standardheader">
+                                    <nobr>Old Email</nobr>
+                                </h3>
+                            </td>
+                            <td width="400px" valign="top" class="ms-formbody">
+                                <xsl:value-of select="@Old_x0020_Email" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="190px" valign="top" class="ms-formlabel">
+                                <h3 class="ms-standardheader">
+                                    <nobr>Old SAP ID</nobr>
+                                </h3>
+                            </td>
+                            <td width="400px" valign="top" class="ms-formbody">
+                                <xsl:value-of select="@Old_x0020_SAP_x0020_ID" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="190px" valign="top" class="ms-formlabel">
+                                <h3 class="ms-standardheader">
+                                    <nobr>Other Account</nobr>
+                                </h3>
+                            </td>
+                            <td width="400px" valign="top" class="ms-formbody">
+                                <xsl:value-of select="@Other_x0020_Account" />
                             </td>
                         </tr>
                         <tr>
@@ -232,65 +264,31 @@
                         <tr>
                             <td width="190px" valign="top" class="ms-formlabel">
                                 <h3 class="ms-standardheader">
-                                    <nobr>Other1</nobr>
+                                    <nobr>Status</nobr>
                                 </h3>
                             </td>
                             <td width="400px" valign="top" class="ms-formbody">
-                                <xsl:value-of select="@Other1" />
+                                <xsl:value-of select="@Status" />
                             </td>
                         </tr>
                         <tr>
                             <td width="190px" valign="top" class="ms-formlabel">
                                 <h3 class="ms-standardheader">
-                                    <nobr>Other2</nobr>
+                                    <nobr>Terminate Date</nobr>
                                 </h3>
                             </td>
                             <td width="400px" valign="top" class="ms-formbody">
-                                <xsl:value-of select="@Other2" />
+                                <xsl:value-of select="@Terminate_x0020_Date" />
                             </td>
                         </tr>
-
                         <tr>
                             <td width="190px" valign="top" class="ms-formlabel">
                                 <h3 class="ms-standardheader">
-                                    <nobr>Other3</nobr>
+                                    <nobr>Office</nobr>
                                 </h3>
                             </td>
                             <td width="400px" valign="top" class="ms-formbody">
-                                <xsl:value-of select="@Other3" />
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td width="190px" valign="top" class="ms-formlabel">
-                                <h3 class="ms-standardheader">
-                                    <nobr>Other4</nobr>
-                                </h3>
-                            </td>
-                            <td width="400px" valign="top" class="ms-formbody">
-                                <xsl:value-of select="@Other4" />
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td width="190px" valign="top" class="ms-formlabel">
-                                <h3 class="ms-standardheader">
-                                    <nobr>Other5</nobr>
-                                </h3>
-                            </td>
-                            <td width="400px" valign="top" class="ms-formbody">
-                                <xsl:value-of select="@Other5" />
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td width="190px" valign="top" class="ms-formlabel">
-                                <h3 class="ms-standardheader">
-                                    <nobr>Other6</nobr>
-                                </h3>
-                            </td>
-                            <td width="400px" valign="top" class="ms-formbody">
-                                <xsl:value-of select="@Other6" />
+                                <xsl:value-of select="@Office" />
                             </td>
                         </tr>
 
@@ -366,17 +364,17 @@
 
     <script src="../../SitePages/scripts/jquery-3.1.0.min.js" type="text/javascript"></script>
     <script type="text/javascript">
-var NTAccount = null;
+//var NTAccount = null;
 $(document).ready(function(){
-		NTAccount = $("#CustomerList").text();
-		$("#CustomerList").text("CustomerList");
-		$("#CustomerList").click(function(){
+
+		//$("#CustomerList").text("CustomerList");
+		$("#btCustomerList").click(function(){
 			if ($("#CustomerListDiv").text()==""){
 				$("#CustomerListDiv").load('../../SitePages/CustomerList.html',function(){
-					$("#AngularDiv").css('zIndex',2);
-					$("#AngularClose").click(function(){
-						$("#AngularDiv").hide();
-					});
+					//$("#AngularDiv").css('zIndex',2);
+					//$("#btAngularClose").click(function(){
+					//	$("#AngularDiv").hide();
+					//});
 				});
 			}
 			else {
