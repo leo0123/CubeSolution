@@ -11,32 +11,31 @@
 <script src="../../SitePages/scripts/ExpressionAngular.js"></script>
 
 <div id="permissionEditor" style="position:absolute;left:0px;top:0px;background:lightblue;width:900px;" ng-app="myApp">
-    <input type="button" value="OK" id="btPermissionOK" class="ms-ButtonHeightWidth" target="_self" />
-    <input type="button" value="Cancel" id="btPermissionCancel" class="ms-ButtonHeightWidth" target="_self" />
-
+    <input type="button" value="OK" id="btPermissionOK" class="ms-ButtonHeightWidth" target="_self"/>
+    <input type="button" value="Cancel" id="btPermissionCancel" class="ms-ButtonHeightWidth" target="_self"/>
+	
     <div ng-controller="myCtrl">
         <h1>{{DomainAccount}}</h1>{{status}}
         {{msg}}
         <md-progress-circular ng-show="waiting" md-mode="indeterminate"></md-progress-circular>
         <md-tabs md-selected="selectedTabIndex" md-dynamic-height md-border-bottom>
-            <md-tab label="BG">
+            <md-tab label="BG" ng-if="1==0">
                 <md-input-container>
-                    <md-select ng-model="selectedBG" ng-change="selectedChanged('BG')" multiple placeholder="Select BG">
-                        <md-option ng-value="item.Value" ng-repeat="item in BGs">{{item.Value}}</md-option>
+                    <md-select ng-model="selectedBG" ng-change="selectedChanged(theOptionLists.BGStr)" multiple placeholder="Select BG">
+                            <md-option ng-value="item.Value" ng-repeat="item in BGs">{{item.Value}}</md-option>
                     </md-select>
                 </md-input-container>
                 <md-button ng-click="nextTab()">next</md-button>
             </md-tab>
-            <md-tab label="ProfitCenter">
+            <md-tab label="ProfitCenter" md-on-select="delayLoadOption('ProfitCenter')">
                 <md-button ng-click="previousTab()">previous</md-button>
                 <md-input-container style="width:200px">
                     <md-select ng-model="selectedProfitCenter" ng-change="selectedChanged('ProfitCenter')" multiple placeholder="input at least 2 letters">
                         <md-select-header>
                             <input ng-model="inputProfitCenter"
-                                   ng-change="inputProfitCenterChanged()"
                                    ng-keydown="onSearchChange($event)" />
                         </md-select-header>
-                        <md-option ng-value="item.Value" ng-repeat="item in ProfitCenters | filter:inputProfitCenter">{{item.Value}}</md-option>
+                            <md-option ng-value="item.Value" ng-repeat="item in ProfitCenters | filter:inputProfitCenter">{{item.Value}}</md-option>
                     </md-select>
                 </md-input-container>
                 <md-button ng-click="nextTab()">next</md-button>
@@ -44,8 +43,8 @@
             <md-tab label="SalesP">
                 <md-button ng-click="previousTab()">previous</md-button>
                 <md-input-container>
-                    <md-select ng-model="selectedSalesP" ng-change="selectedChanged('SalesP')" multiple placeholder="Select SalesP">
-                        <md-option ng-value="item.Value" ng-repeat="item in SalesPs">{{item.Value}}</md-option>
+                    <md-select ng-model="selectedSalesP" ng-change="selectedChanged(theOptionLists.SalesPStr)" multiple placeholder="Select SalesP">
+                            <md-option ng-value="item.Value" ng-repeat="item in SalesPs">{{item.Value}}</md-option>
                     </md-select>
                 </md-input-container>
                 <md-button ng-click="nextTab()">next</md-button>
@@ -53,8 +52,8 @@
             <md-tab label="Office">
                 <md-button ng-click="previousTab()">previous</md-button>
                 <md-input-container>
-                    <md-select ng-model="selectedOffice" ng-change="selectedChanged('Office')" multiple placeholder="Select Office">
-                        <md-option ng-value="item.Value" ng-repeat="item in Offices">{{item.Value}}</md-option>
+                    <md-select ng-model="selectedOffice" ng-change="selectedChanged(theOptionLists.OfficeStr)" multiple placeholder="Select Office">
+                            <md-option ng-value="item.Value" ng-repeat="item in Offices">{{item.Value}}</md-option>
                     </md-select>
                 </md-input-container>
                 <md-button ng-click="nextTab()">next</md-button>
@@ -62,8 +61,8 @@
             <md-tab label="SalesOffice">
                 <md-button ng-click="previousTab()">previous</md-button>
                 <md-input-container>
-                    <md-select ng-model="selectedSalesOffice" ng-change="selectedChanged('[Sales Office]')" multiple placeholder="Select SalesOffice">
-                        <md-option ng-value="item.Value" ng-repeat="item in SalesOffices">{{item.Value}}</md-option>
+                    <md-select ng-model="selectedSalesOffice" ng-change="selectedChanged(theOptionLists.SalesOfficeStr)" multiple placeholder="Select SalesOffice">
+                            <md-option ng-value="item.Value" ng-repeat="item in SalesOffices">{{item.Value}}</md-option>
                     </md-select>
                 </md-input-container>
                 <md-button ng-click="nextTab()">next</md-button>
@@ -71,27 +70,26 @@
             <md-tab label="SalesType">
                 <md-button ng-click="previousTab()">previous</md-button>
                 <md-input-container>
-                    <md-select ng-model="selectedSalesType" ng-change="selectedChanged('[Sales Type]')" multiple placeholder="Select SalesType">
-                        <md-option ng-value="item.Value" ng-repeat="item in SalesTypes">{{item.Value}}</md-option>
+                    <md-select ng-model="selectedSalesType" ng-change="selectedChanged(theOptionLists.SalesTypeStr)" multiple placeholder="Select SalesType">
+                            <md-option ng-value="item.Value" ng-repeat="item in SalesTypes">{{item.Value}}</md-option>
                     </md-select>
                 </md-input-container>
                 <md-button ng-click="nextTab()">next</md-button>
             </md-tab>
-            <md-tab label="EndCustomer">
+            <md-tab label="EndCustomer" md-on-select="delayLoadOption('EndCustomer')">
                 <md-button ng-click="previousTab()">previous</md-button>
                 <md-input-container>
                     <md-select ng-model="selectedEndCustomer" ng-change="selectedChanged('[End Customer]')" multiple placeholder="input at least 2 letters">
                         <md-select-header>
                             <input ng-model="inputEndCustomer"
-                                   ng-change="inputEndCustomerChanged()"
                                    ng-keydown="onSearchChange($event)" />
                         </md-select-header>
-                        <md-option ng-value="item.Value" ng-repeat="item in EndCustomers | filter:inputEndCustomer">{{item.Value}}</md-option>
+                            <md-option ng-value="item.Value" ng-repeat="item in EndCustomers | filter:inputEndCustomer">{{item.Value}}</md-option>
                     </md-select>
                 </md-input-container>
                 <md-button ng-click="nextTab()">next</md-button>
             </md-tab>
-            <md-tab label="SoldToCustomer">
+            <md-tab label="SoldToCustomer" md-on-select="delayLoadOption('SoldToCustomer')">
                 <md-button ng-click="previousTab()">previous</md-button>
                 <md-input-container>
                     <md-select ng-model="selectedSoldToCustomer" ng-change="selectedChanged('CustName')" multiple placeholder="input at least 3 letters">
@@ -100,13 +98,13 @@
                                    ng-change="inputSoldToCustomerChanged()"
                                    ng-keydown="onSearchChange($event)" />
                         </md-select-header>
-                        <md-option ng-value="item.Value" ng-repeat="item in SoldToCustomers | filter:inputSoldToCustomer">{{item.Value}}</md-option>
+                            <md-option ng-value="item.Value" ng-repeat="item in SoldToCustomers | filter:inputSoldToCustomer">{{item.Value}}</md-option>
                     </md-select>
                 </md-input-container>
             </md-tab>
         </md-tabs>
 
-        <div id="HiddenAngular" ng-if="1==1">
+        <div id="HiddenAngular" ng-if="1==0">
             <div id="AngularJSONStr">{{expRoot | json}}</div>
             <br />
             <div id="AngularPermission">{{expRoot.ToString()}}</div>
@@ -115,24 +113,25 @@
 
         <md-button ng-if="expRoot.Children.length == 0" ng-click="addInGroup(expRoot)" class="md-fab md-mini md-primary">+</md-button>
         <script type="text/ng-template" id="panel.tmpl.html">
-            <p>Field : <input type="text" ng-model="$root.field"></p>
+            <!--<p>Field : <input type="text" ng-model="$root.field"></p>
             <p>Value : <input type="text" ng-model="$root.value"></p>
-            <md-button ng-click="$root.save()" class="md-fab md-mini md-primary">ok</md-button>
+            <md-button ng-click="$root.save()" class="md-fab md-mini md-primary">ok</md-button>-->
         </script>
         <div id="setFieldValueContainer" style="position:absolute;left:200px;top:100px;background:lightyellow;width:300px;">
-            <p>Field : <input type="text" ng-model="$root.field"></p>
-            <p>
-                Value : <md-select ng-model="$root.value" placeholder="input at least 2 letters">
-                    <md-select-header>
-                        <input ng-model="inputCommon"
-                               ng-change="inputCommonChanged()"
-                               ng-keydown="onSearchChange($event)" />
-                    </md-select-header>
-                    <md-option ng-value="item.Value" ng-repeat="item in commonList | filter:inputCommon">{{item.Value}}</md-option>
-                </md-select>
-            </p>
-            <input type="button" value="OK" id="btSetFieldValueOK" class="ms-ButtonHeightWidth" target="_self" />
-            <input type="button" value="Cancel" id="btSetFieldValueCancel" class="ms-ButtonHeightWidth" target="_self" />
+            <p>Field : <!--<input type="text" ng-model="singleField">-->
+                <md-select ng-model="singleField" ng-change="selectedChanged('singleField')">
+                            <md-option ng-value="item" ng-repeat="item in theOptionLists.FieldList">{{item}}</md-option>
+                    </md-select></p>
+            <p>Value : <md-select ng-model="singleValue" placeholder="input at least 2 letters">
+                        <md-select-header>
+                            <input ng-model="inputCommon"
+                                   ng-change="inputCommonChanged()"
+                                   ng-keydown="onSearchChange($event)" />
+                        </md-select-header>
+                            <md-option ng-value="item.Value" ng-repeat="item in commonList | filter:inputCommon">{{item.Value}}</md-option>
+                    </md-select></p>
+            <input type="button" value="OK" id="btSetFieldValueOK" class="ms-ButtonHeightWidth" target="_self"/>
+            <input type="button" value="Cancel" id="btSetFieldValueCancel" class="ms-ButtonHeightWidth" target="_self"/>
         </div>
 
         <script type="text/ng-template" id="expTree">
