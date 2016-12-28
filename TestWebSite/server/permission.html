@@ -122,7 +122,11 @@
                 <md-select ng-model="singleField" ng-change="selectedChanged('singleField')">
                             <md-option ng-value="item" ng-repeat="item in theOptionLists.FieldList">{{item}}</md-option>
                     </md-select></p>
-            <p>Value : <md-select ng-model="singleValue" placeholder="input at least 2 letters">
+			<p>Operation : <md-select ng-model="singleOperation" ng-change="selectedChanged('singleOperation')">
+								<md-option ng-value="item" ng-repeat="item in theOptionLists.OperationList">{{item}}</md-option>
+							</md-select></p>
+			<p id="singleValueLike">Value : <input type="text" ng-model="singleValue" /></p>
+            <p id="singleValueEqual">Value : <md-select ng-model="singleValue" placeholder="input at least 2 letters">
                         <md-select-header>
                             <input ng-model="inputCommon"
                                    ng-change="inputCommonChanged()"
@@ -145,7 +149,7 @@
                     </md-menu-content>
                 </md-menu>
                 <md-menu>
-                    <md-button class="md-no-style1" ng-click="openMenu($mdOpenMenu, $event)">{{tempExp.Field}}={{tempExp.Value}}</md-button>
+                    <md-button class="md-no-style1" ng-click="openMenu($mdOpenMenu, $event)">{{tempExp.Field}}{{tempExp.Operation}}{{tempExp.Value}}</md-button>
                     <md-menu-content>
                         <md-menu-item>
                             <md-button class="md-no-style1" ng-click="edit(tempExp)">edit</md-button>
