@@ -47,6 +47,13 @@ function myCtrl($scope, $mdPanel, $http, $location) {
 		}
 		if (spJSONStr.val() != "") {
 			setRoot(angular.fromJson(spJSONStr.val()));
+		} else if (spPermission.val() != "") {
+			var exp = ParseSql(spPermission.val());
+			var r = new Expression();
+			r.IsGroup = true;
+			r.Children.push(exp);
+			setRoot(angular.fromJson(angular.toJson(r)));
+			//setRoot(exp);
 		}
 		rootScope.$apply();
 	});
@@ -58,7 +65,7 @@ function myCtrl($scope, $mdPanel, $http, $location) {
 	$("#btPermissionCancel").click(function () {
 		$("#permissionEditor").hide();
 	});
-	/*$("#btSetFieldValueOK").click(function () {
+	$("#btSetFieldValueOK").click(function () {
 		var value = "'" + $scope.singleValue + "'";
 		var operation = $scope.singleOperation;
 		if (operation == "like") {
@@ -75,28 +82,28 @@ function myCtrl($scope, $mdPanel, $http, $location) {
 		}
 		$("#setFieldValueContainer").hide();
 		rootScope.$apply();
-	});*/
+	});
 	$("#btSetFieldValueCancel").click(function () {
 		$("#setFieldValueContainer").hide();
 	});
-	$scope.btSetFieldValueOKClick=function () {
-		var value = "'" + $scope.singleValue + "'";
-		var operation = $scope.singleOperation;
-		if (operation == "like") {
-			operation = " " + operation + " ";
-			//value = "'" + $scope.singleLikeValue + "'";
-		}
-		if (dialogStatus == "addInGroup") {
-			expM.add(currentGroup, $scope.singleField, value, operation);
-		} else if (dialogStatus == "edit") {
-			currentExp.setFieldValue($scope.singleField, value, operation);
-		} else if (dialogStatus == "addGroup") {
-			expM.addGroup(currentGroup, $scope.singleField, value, operation);
-			rootScope.expRoot = expM.getRoot();
-		}
-		$("#setFieldValueContainer").hide();
-		//rootScope.$apply();
-	};
+	/*$scope.btSetFieldValueOKClick = function () {
+	var value = "'" + $scope.singleValue + "'";
+	var operation = $scope.singleOperation;
+	if (operation == "like") {
+	operation = " " + operation + " ";
+	//value = "'" + $scope.singleLikeValue + "'";
+	}
+	if (dialogStatus == "addInGroup") {
+	expM.add(currentGroup, $scope.singleField, value, operation);
+	} else if (dialogStatus == "edit") {
+	currentExp.setFieldValue($scope.singleField, value, operation);
+	} else if (dialogStatus == "addGroup") {
+	expM.addGroup(currentGroup, $scope.singleField, value, operation);
+	rootScope.expRoot = expM.getRoot();
+	}
+	$("#setFieldValueContainer").hide();
+	//rootScope.$apply();
+	};*/
 
 	setRoot = function (jsonObject) {
 		expM.setRoot(jsonObject);
@@ -194,7 +201,7 @@ function myCtrl($scope, $mdPanel, $http, $location) {
 			searchCommon();
 			return;
 		} else if (field == "singleOperation") {
-			if ($scope.singleOperation=="="){
+			if ($scope.singleOperation == "=") {
 				$("#singleValueEqual").show();
 				$("#singleValueLike").hide();
 			} else {
@@ -247,6 +254,14 @@ function myCtrl($scope, $mdPanel, $http, $location) {
 		this.SoldToCustomerStr = "CustName";
 
 		this.FieldList = [this.BGStr, this.SalesPStr, this.OfficeStr, this.SalesOfficeStr, this.SalesTypeStr, this.ProfitCenterStr, this.EndCustomerStr, this.SoldToCustomerStr];
+		this.LowerFieldList = [this.BGStr.toLowerCase(), this.SalesPStr.toLowerCase(), this.OfficeStr.toLowerCase(), this.SalesOfficeStr.toLowerCase(), this.SalesTypeStr.toLowerCase(), this.ProfitCenterStr.toLowerCase(), this.EndCustomerStr.toLowerCase(), this.SoldToCustomerStr.toLowerCase()];
+		this.getNormalCase = function (type) {
+			var i = this.LowerFieldList.indexOf(type);
+			if (i >= 0) {
+				return this.FieldList[i];
+			}
+			return type;
+		};
 
 		this.OperationList = ["=", "like"];
 
@@ -383,7 +398,8 @@ function myCtrl($scope, $mdPanel, $http, $location) {
 	$scope.edit = function (exp) {
 		var rootScope = $scope.$root;
 		currentExp = exp;
-		$scope.singleField = exp.Field;
+		exp.Field = $scope.theOptionLists.getNormalCase(exp.Field);
+		$scope.singleField = exp.Field;//exp.Field;
 		$scope.singleValue = exp.Value.replace(/'/g, "");
 		$scope.singleLikeValue = exp.Value.replace(/'/g, "");
 		$scope.singleOperation = exp.Operation.replace(/ /g, "");
